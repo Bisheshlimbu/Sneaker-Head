@@ -1,0 +1,147 @@
+/* Single page start */
+/* body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+  } */
+
+.single-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*   
+  .breadcrumb {
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 20px;
+  } */
+
+.product-page {
+  display: flex;
+  gap: 40px;
+  padding: 50px;
+}
+
+/* Left side */
+.product-images {
+  flex: 1;
+  min-width: 300px;
+}
+
+.main-image {
+  width: 50%;
+  height: 600px;
+  border-radius: 8px;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 600px;
+  }
+}
+
+.thumbnails {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+  /* overflow-x:scroll; */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnails img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+/* Right side */
+.product-info {
+  /* width: 50%; */
+  flex: 1;
+  min-width: 300px;
+}
+
+.product-info h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 24px;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.pay-info {
+  font-size: 13px;
+  color: #ccc;
+}
+
+.color-section {
+  margin: 20px 0;
+}
+
+.color-thumb {
+  width: 50px;
+  margin-top: 5px;
+}
+
+.sizes {
+  margin: 20px 0;
+}
+
+.size-grid {
+  display: grid;
+  width: 50%;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 10px;
+}
+
+.size-grid button {
+  background-color: #222;
+  color: #fff;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.shipping {
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.in-stock {
+  color: #4caf50;
+  margin-top: 5px;
+}
+
+.add-to-bag {
+  background-color: #1e90ff;
+  color: white;
+  padding: 15px;
+  border: none;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.status-box {
+  background-color: #1a1a1a;
+  padding: 15px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.status-box a {
+  color: #3faaff;
+  text-decoration: none;
+}
