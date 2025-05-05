@@ -7,7 +7,7 @@
         <!-- Left: Images -->
         <div class="product-images">
             <span class="main-image">
-                <img id="main-image" src="http://sneaker-head.local/assets/images/favs.jpg" alt="Sneaker">
+                <img id="main-image" src="assets/images/favs.jpg" alt="Sneaker">
             </span>
             <div class="thumbnails">
                 <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/favs.jpg" alt="">
