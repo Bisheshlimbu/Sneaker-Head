@@ -1,5 +1,11 @@
 <?php include_once('../header.php')?>
+<?php
+$product_id=isset($_GET['pid'])?$_GET['pid']:"";
+$product=getProductDetailsByProduct_id($product_id);
+// var_dump($product);
 
+$attachments=getProductAttachmentsByProduct_id($product_id);
+?>
 <div class="single-container">
     <!-- <nav class="breadcrumb">Home / Men / Shoes / Casual</nav> -->
 
@@ -7,21 +13,26 @@
         <!-- Left: Images -->
         <div class="product-images">
             <span class="main-image">
-                <img id="main-image" src="assets/images/favs.jpg" alt="Sneaker">
+                <img id="main-image" src="http://sneaker-head.local/<?php echo $product['product_image']?>"
+                    alt="Sneaker">
             </span>
             <div class="thumbnails">
-                <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/favs.jpg" alt="">
-                <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="">
-                <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/shoes2.jpg" alt="">
-                <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/shoes.jpg" alt="">
-                <img class="thumbnail-image" src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="">
+                <?php
+                    if(!empty($attachments) && is_array($attachments)){
+                        foreach($attachments as $attachment){
+                            ?>
+                            <img class="thumbnail-image" src="http://sneaker-head.local/<?php echo $attachment['url']?>" alt="">
+                            <?php
+                        }
+                    }
+                    ?>
             </div>
         </div>
 
         <!-- Right: Details -->
         <div class="product-info">
-            <h1>MEN'S NIKE AIR TRAINER SC HIGH CASUAL SHOES</h1>
-            <p class="price">$135.00</p>
+            <h1><?php echo ucfirst($product['title'])?></h1>
+            <p class="price">$<?php echo ' '. $product['price']?></p>
             <p class="pay-info">Or 4 interest-free payments with Klarna, Afterpay, or PayPal</p>
 
             <div class="color-section">

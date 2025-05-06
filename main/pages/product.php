@@ -1,6 +1,5 @@
 <?php include_once('../header.php')?>
 
-
 <div class="page-container">
 
     <!-- Sidebar Navigation -->
@@ -43,142 +42,36 @@
         <h2>SHOP BY CATEGORY</h2>
 
         <div class="carousel">
-            <a href="single.php" class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </a>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes2.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/assets/images/shoes3.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
+            <?php
+            $products=getProductDetails();
+            if(!empty($products)&& is_array($products)){
+                foreach($products as $product){
+                  ?>
+                    <a href="single.php?pid=<?php echo $product['id']?>" class="product-card">
+                        <span class="imageContainer recommended-product-img">
+                            <img src="http://sneaker-head.local/<?php echo $product['product_image']?>" alt="Sneaker">
+                        </span>
+                        <div class="product-desc">
+                            <p><?php echo $product['title'];?></p>
+                            <span><?php echo $product['brand']?></span>
+                            <p class="product-price">$<?php echo $product['price']?></p>
+                            <span>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <?php
+                }
+            }else{
+                echo "No Products Found.";
+            }
+            ?>
+
+
         </div>
     </main>
 

@@ -1,5 +1,7 @@
 <?php
 include_once('../../config/connection.php');
+include_once('sidebar.php');
+
 
 if (isset($_POST['create_product_btn'])) {
 
@@ -75,8 +77,8 @@ if (isset($_POST['create_product_btn'])) {
     }
 }
 ?>
-
 <link rel="stylesheet" href="http://sneaker-head.local/assets/css/style.css">
+
 <main class="form-container">
     <form action="#" method="POST" enctype="multipart/form-data" class="product-form">
         <h2>Add New Product</h2>
@@ -91,7 +93,7 @@ if (isset($_POST['create_product_btn'])) {
                 <input type="number" name="price" id="price" required>
             </div>
         </div>
-        <div>
+        <div class="add_product_form_fields">
             <div class="form-group">
                 <label for="category">Category</label>
                 <select name="category" required>
@@ -112,25 +114,26 @@ if (isset($_POST['create_product_btn'])) {
                 </select>
             </div>
         </div>
-        <div>
-            <div class="form-group">
-                <label for="type">Type</label>
-                <select name="type" required>
-                    <option value="">select-type</option>
-                    <option value="casuals">Casuals</option>
-                    <option value="running">Running</option>
-                    <option value="basketball">Basketball</option>
-                </select>
-            </div>
 
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select name="type" required>
+                <option value="">select-type</option>
+                <option value="casuals">Casuals</option>
+                <option value="running">Running</option>
+                <option value="basketball">Basketball</option>
+            </select>
+        </div>
+        <div class="add_product_form_fields">
             <div class="form-group">
                 <label for="image">Product Thumbnail Image</label>
                 <input type="file" name="thumb_image" id="image" accept="image/*" required>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="image">Gallery Images</label>
-            <input type="file" name="gallery_image[]" id="image" multiple accept="image/*" required>
+
+            <div class="form-group">
+                <label for="image">Gallery Images</label>
+                <input type="file" name="gallery_image[]" id="image" multiple accept="image/*" required>
+            </div>
         </div>
 
         <div class="form-group">

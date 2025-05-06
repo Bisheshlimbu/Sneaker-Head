@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include_once('config/functions.php');
+include_once('../../config/functions.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@ include_once('config/functions.php');
     <header class="header">
         <div class="top-banner">Get 20% off! Use code: SNEAKS</div>
         <div class="navbar">
-            <div class="logo">SNEAKER <span>HEAD</span></div>
+            <div class="logo"><a href="http://sneaker-head.local/">SNEAKER <span>HEAD</span></a></div>
             <div class="navright">
                 <div class="search-bar">
                     <input type="text" placeholder="Search">
