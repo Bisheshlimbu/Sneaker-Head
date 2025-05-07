@@ -110,6 +110,7 @@ if (isset($_POST['create_product_btn'])) {
                     <option value="nike">Nike</option>
                     <option value="new-balance">New Balance</option>
                     <option value="jordan">Jordan</option>
+                    <option value="adidas">Adidas</option>
                     <option value="asics">Asics</option>
                 </select>
             </div>

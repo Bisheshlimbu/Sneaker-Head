@@ -1,25 +1,23 @@
 <?php include_once('../header.php')?>
 
 <div class="page-container">
-
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
         <h2>Brands</h2>
         <ul>
-            <li>Nike</li>
-            <li>Jordan</li>
-            <li>New Balance</li>
-            <li>On</li>
-            <li>adidas</li>
-            <li>Asics</li>
+            <li><a href="/main/pages/product.php?brand=nike">Nike</a></li>
+            <li><a href="/main/pages/product.php?brand=jordan">Jordan</a></li>
+            <li><a href="/main/pages/product.php?brand=new-balance">New Balance</a></li>
+            <li><a href="/main/pages/product.php?brand=adidas">adidas</a></li>
+            <li><a href="/main/pages/product.php?brand=asics">Asics</a></li>
         </ul>
 
-        <h2>Shoes</h2>
+        <h2>Type</h2>
         <ul>
-            <li>All Shoes</li>
-            <li>Running Shoes</li>
-            <li>Basketball Shoes</li>
-            <li>Casual Shoes</li>
+            <li><a href="/main/pages/product.php">All Shoes</li>
+            <li><a href="/main/pages/product.php?type=running">Running Shoes</li>
+            <li><a href="/main/pages/product.php?type=basketball">Basketball Shoes</li>
+            <li><a href="/main/pages/product.php?type=casuals">Casual Shoes</li>
         </ul>
 
         <h2>Collection</h2>
@@ -43,7 +41,11 @@
 
         <div class="carousel">
             <?php
-            $products=getProductDetails();
+            $brand=isset($_GET['brand'])?$_GET['brand']:"";
+            $type=isset($_GET['type'])?$_GET['type']:"";
+            $category=isset($_GET['category'])?$_GET['category']:"";
+
+            $products=getProductDetails($brand, $type, $category);
             if(!empty($products)&& is_array($products)){
                 foreach($products as $product){
                   ?>

@@ -1,6 +1,19 @@
 <?php 
 session_start();
-include_once('../../config/functions.php');
+include_once(__DIR__.'../../config/functions.php');
+
+
+
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : "";
+
+if (empty($user_id)) {
+    header("Location: /main/pages/login.php");
+    exit(); 
+}
+
+// If user_id is set, fetch user details
+$users = getUsersDetailsById($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,17 +47,34 @@ include_once('../../config/functions.php');
                     <button><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <div class="nav-links">
+                    <?php
+                    if(isset($users) && !empty($users)){
+                        ?>
+                    <a href="#"><?php echo $users['username']?></a>
+                    <?php
+                    }else{
+                        ?>
                     <a href="main/pages/login.php">Account</a>
+                    <?php
+                    }
+                    ?>
+
                     <a href="#">Bag</a>
+                    <?php
+                    if(isset($users) && !empty($users)){
+                        ?>
                     <a href="http://sneaker-head.local/main/pages/logout.php">Logout</a>
+                    <?php
+                    }
+                   ?>
                 </div>
-                
+
             </div>
         </div>
         <nav class="category-nav">
-            <a href="#">Men</a>
-            <a href="#">Women</a>
-            <a href="#">Kids</a>
+            <a href="/main/pages/product.php?category=men">Men</a>
+            <a href="/main/pages/product.php?category=women">Women</a>
+            <a href="/main/pages/product.php?category=kid">Kids</a>
             <a href="#">Clothing</a>
             <a href="#">Accessories</a>
             <a href="#">Sale</a>

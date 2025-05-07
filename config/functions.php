@@ -23,10 +23,43 @@ function getUsersDetailsById($user_id){
 }
 
 
-function getProductDetails(){
+function getProductDetails($brand, $type, $category){
     try {
         global $conn;
-        $stmt = $conn->prepare("SELECT * FROM products");
+        $condition="";
+        if(!empty($brand)&& empty($type) && empty($category)){
+            $condition= "WHERE brand='$brand'";
+        }elseif(empty($brand)&& !empty($type) && empty($category)){
+            $condition= "WHERE type='$type'";
+        }elseif(empty($brand)&& empty($type) && !empty($category)){
+            $condition= "WHERE category='$category'";
+        }
+
+        $stmt = $conn->prepare("SELECT * FROM products $condition");
+        // $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $products;
+        }
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+
+function getProductDetailsForNew(){
+    try {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * 
+FROM products
+WHERE STR_TO_DATE(created_at, '%b-%d-%Y') >= CURDATE() - INTERVAL 7 DAY
+LIMIT 5");
         // $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {

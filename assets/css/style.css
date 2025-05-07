@@ -235,7 +235,6 @@ h2 {
 
 .carousel {
   display: flex;
-  overflow-x: auto;
   gap: 20px;
   flex-wrap: wrap;
   a{
@@ -264,9 +263,13 @@ h2 {
   padding: 5px;
   border-bottom: 1px;
   border-color: gray;
+  width: 100%;
   p {
     font-size: 20px;
     font-weight: 500;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
   }
   .product-price {
     font-size: 14px;
@@ -413,10 +416,14 @@ a{
 .page-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  position: relative;
 }
 
 .sidebar {
   width: 320px;
+  position: absolute;
+  left: 0;
   background-color: #1a1a1a;
   padding: 20px;
 }
@@ -428,6 +435,9 @@ a{
   font-size: 26px;
 }
 
+a{
+  text-decoration: none;
+}
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -445,6 +455,7 @@ a{
 .main-content {
   flex: 1;
   padding: 40px;
+  margin-left: 350px;
 }
 
 .main-content h1 {
