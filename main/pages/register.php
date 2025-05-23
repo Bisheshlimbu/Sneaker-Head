@@ -68,14 +68,25 @@ if(isset($_POST['register_user_btn'])){
 
     .title {
         font-weight: bold;
+
+        a {
+            text-decoration: none;
+        }
     }
 
     .highlight {
         color: #3b82f6;
     }
 
+    .brand-white {
+        color: white;
+    }
+
     .form-container {
         text-align: center;
+        background-color: #1e1e1e;
+        padding: 20px;
+        border-radius: 8px;
     }
 
     form {
@@ -134,11 +145,12 @@ if(isset($_POST['register_user_btn'])){
 <body>
 
     <div class="form-container">
-        <h1 class="title">SNEAKER <span class="highlight">HEAD</span></h1>
+        <h1 class="title"><a href="http://sneaker-head.local/"><span class="brand-white">SNEAKER</span> <span
+                    class="highlight">HEAD</span></a></h1>
         <div class="icon">👤</div>
         <p><strong>ONE ACCOUNT.<br>MORE ACCESS.</strong></p>
         <p><strong>CREATE A STATUS ACCOUNT</strong></p>
-        <p class="small-text">Sign up to receive an exclusive $10 Welcome Reward<br>Gain Access. Get Sneakers. Boost
+        <p class="small-text">Sign up to receive an exclusive  Welcome <br>Gain Access. Get Sneakers. Boost
             Your Confidence.</p>
 
         <form action="register.php" method="POST">

@@ -3,7 +3,15 @@ include_once('../../config/connection.php');
 include_once('sidebar.php');
 
 
+
+if (empty($user_id)) {
+    header("Location: /main/pages/login.php");
+    exit(); 
+}
+
+
 if (isset($_POST['create_product_btn'])) {
+    
 
     $title = $_POST['title'];
     $price = $_POST['price'];
@@ -12,6 +20,9 @@ if (isset($_POST['create_product_btn'])) {
     $type = $_POST['type'];
     $description = $_POST['description'];
     $created_at = $updated_at = strtolower(date('F-d-Y'));
+
+    $sizeArray = array_map('intval', explode('-', $_POST['size']));
+$sizeJson = json_encode($sizeArray);
 
     if (isset($_POST) && $_FILES) {
 
@@ -30,14 +41,15 @@ if (isset($_POST['create_product_btn'])) {
             $thumb_url = $base_dir . $thumb_name;
 
             // Now INSERT the product with the thumbnail image
-            $stmt = $conn->prepare("INSERT INTO products(title, price, category, brand, type, product_image, description, created_at, updated_at)
-            VALUES(:title, :price, :category, :brand, :type, :product_image, :description, :created_at, :updated_at)");
+            $stmt = $conn->prepare("INSERT INTO products(title, price, category, brand, type,size, product_image, description, created_at, updated_at)
+            VALUES(:title, :price, :category, :brand, :type, :size, :product_image, :description, :created_at, :updated_at)");
 
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':price', $price, PDO::PARAM_STR);
             $stmt->bindParam(':category', $category, PDO::PARAM_STR);
             $stmt->bindParam(':brand', $brand, PDO::PARAM_STR);
             $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+            $stmt->bindParam(':size', $sizeJson, PDO::PARAM_STR);
             $stmt->bindParam(':product_image', $thumb_url, PDO::PARAM_STR);
             $stmt->bindParam(':description', $description, PDO::PARAM_STR);
             $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
@@ -116,6 +128,7 @@ if (isset($_POST['create_product_btn'])) {
             </div>
         </div>
 
+
         <div class="form-group">
             <label for="type">Type</label>
             <select name="type" required>
@@ -124,6 +137,12 @@ if (isset($_POST['create_product_btn'])) {
                 <option value="running">Running</option>
                 <option value="basketball">Basketball</option>
             </select>
+
+        </div>
+        <div class="form-group">
+            <label for="Size">Size</label>
+            <input type="text" name="size" id="size" placeholder="36-40-42-44...." required>
+            <span id="size-error" style="color:red;"></span>
         </div>
         <div class="add_product_form_fields">
             <div class="form-group">
@@ -142,6 +161,54 @@ if (isset($_POST['create_product_btn'])) {
             <textarea name="description" id="description" rows="4" required placeholder="add description"></textarea>
         </div>
 
-        <button type="submit" name="create_product_btn" class="submit-btn">Add Product</button>
+        <button type="submit" name="create_product_btn" id="create_product_btn" class="submit-btn">Add Product</button>
     </form>
 </main>
+<script>
+document.getElementById("size").addEventListener("input", function() {
+    const sizeInput = this.value;
+    const errorMsg = document.getElementById("size-error");
+    const addBtn = document.querySelector('#create_product_btn');
+
+    // Check for invalid characters: only numbers and single hyphens allowed
+    if (!/^[0-9\-]*$/.test(sizeInput)) {
+        errorMsg.textContent = "Only numbers and hyphens (-) are allowed.";
+        return;
+    }
+
+    // Check for double hyphens
+    if (sizeInput.includes("--")) {
+        errorMsg.textContent = "Double hyphens (--) are not allowed.";
+        addBtn.setAttribute("disabled", true);
+        addBtn.style.cursor = "not-allowed";
+        return;
+    }
+
+    // Validate individual sizes
+    const sizes = sizeInput.split("-");
+    for (let size of sizes) {
+        if (size === "") {
+            errorMsg.textContent = "Each size must be a number. No empty values allowed.";
+            addBtn.setAttribute("disabled", true);
+            addBtn.style.cursor = "not-allowed";
+
+
+            return;
+        }
+
+        const num = parseInt(size);
+        if (isNaN(num) || num < 30 || num > 45) {
+            errorMsg.textContent = "Sizes must be numbers from 30 to 45.";
+            addBtn.setAttribute("disabled", true);
+            addBtn.style.cursor = "not-allowed";
+
+            return;
+        }
+    }
+
+    // If all checks pass
+    addBtn.removeAttribute("disabled");
+    addBtn.style.cursor = "";
+    errorMsg.textContent = "";
+});
+</script>

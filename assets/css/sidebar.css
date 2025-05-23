@@ -12,7 +12,8 @@ html {
 
 .sidebar-container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
   position: fixed;
   left: 0;
 }
@@ -24,6 +25,7 @@ html {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .sidebar-logo {

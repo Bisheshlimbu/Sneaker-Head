@@ -7,10 +7,10 @@ include_once(__DIR__.'../../config/functions.php');
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : "";
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : "";
 
-if (empty($user_id)) {
-    header("Location: /main/pages/login.php");
-    exit(); 
-}
+// if (empty($user_id)) {
+//     header("Location: /main/pages/login.php");
+//     exit(); 
+// }
 
 // If user_id is set, fetch user details
 $users = getUsersDetailsById($user_id);
@@ -22,6 +22,7 @@ $users = getUsersDetailsById($user_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneaker Head</title>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="http://sneaker-head.local/assets/css/style.css">
     <link rel="stylesheet" href="http://sneaker-head.local/assets/css/single.css">
 
@@ -34,6 +35,7 @@ $users = getUsersDetailsById($user_id);
         window.history.replaceState(null, null, window.location.href);
     }
     </script>
+
 </head>
 
 <body>
@@ -50,20 +52,27 @@ $users = getUsersDetailsById($user_id);
                     <?php
                     if(isset($users) && !empty($users)){
                         ?>
-                    <a href="#"><?php echo $users['username']?></a>
+                    <!-- <a href="#"><?php //echo $users['username']?></a> -->
+                   <a href="http://sneaker-head.local/main/pages/profile.php"><i class="fa-regular fa-user"></i></a> 
                     <?php
                     }else{
                         ?>
-                    <a href="main/pages/login.php">Account</a>
+                    <a href="#" id="auth_btns">Account</a>
+
+                    <div class="auth_btn_container">
+                        <a href="http://sneaker-head.local/main/pages/login.php">Login</a>
+                        <a href="http://sneaker-head.local/main/pages/register.php">Register</a>
+                    </div>
                     <?php
                     }
                     ?>
 
-                    <a href="#">Bag</a>
+                    <a href="http://sneaker-head.local/main/pages/cart.php">Bag <i class="fa-solid fa-bag-shopping"></i></a>
                     <?php
                     if(isset($users) && !empty($users)){
                         ?>
-                    <a href="http://sneaker-head.local/main/pages/logout.php">Logout</a>
+                    <a href="http://sneaker-head.local/main/pages/logout.php">Logout<i
+                            class="fa-solid fa-right-from-bracket"></i></a>
                     <?php
                     }
                    ?>
@@ -75,8 +84,6 @@ $users = getUsersDetailsById($user_id);
             <a href="/main/pages/product.php?category=men">Men</a>
             <a href="/main/pages/product.php?category=women">Women</a>
             <a href="/main/pages/product.php?category=kid">Kids</a>
-            <a href="#">Clothing</a>
-            <a href="#">Accessories</a>
             <a href="#">Sale</a>
             <a href="#new-arrival">Sneaker Releases</a>
         </nav>

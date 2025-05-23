@@ -21,8 +21,8 @@ $attachments=getProductAttachmentsByProduct_id($product_id);
                     if(!empty($attachments) && is_array($attachments)){
                         foreach($attachments as $attachment){
                             ?>
-                            <img class="thumbnail-image" src="http://sneaker-head.local/<?php echo $attachment['url']?>" alt="">
-                            <?php
+                <img class="thumbnail-image" src="http://sneaker-head.local/<?php echo $attachment['url']?>" alt="">
+                <?php
                         }
                     }
                     ?>
@@ -36,39 +36,46 @@ $attachments=getProductAttachmentsByProduct_id($product_id);
             <p class="pay-info">Or 4 interest-free payments with Klarna, Afterpay, or PayPal</p>
 
             <div class="color-section">
-                <p><strong>Color:</strong> White/Light Zen Grey/Total Orange/Cool Grey</p>
+                <!-- <p><strong>Color:</strong> White/Light Zen Grey/Total Orange/Cool Grey</p> -->
                 <img src="http://sneaker-head.local/assets/images/favs.jpg" alt="Color thumbnail" class="color-thumb">
             </div>
 
             <div class="sizes">
                 <p><strong>Size</strong></p>
                 <div class="size-grid">
-                    <button>7.5</button>
-                    <button>8</button>
-                    <button>8.5</button>
-                    <button>9</button>
-                    <button>9.5</button>
-                    <button>10</button>
-                    <button>10.5</button>
-                    <button>11</button>
-                    <button>11.5</button>
-                    <button>12</button>
-                    <button>13</button>
-                    <button>14</button>
+                    <?php
+                        if (isset($product['size'])) {
+                            $sizes = json_decode($product['size'], true);
+
+                            if (is_array($sizes)) {
+                                foreach ($sizes as $index => $size) {
+                                    $safeSize = htmlspecialchars($size);
+                                    echo '
+                                    <div class="brand-item pre-items">'.$safeSize.'</div>';
+                                        }
+                            } else {
+                                echo "Invalid size data.";
+                            }
+                        }
+                        ?>
+                </div>
+            </div>
+             <div class="qty-wrapper">
+                <p><strong>Quantity:</strong></p>
+                <div class="qty-container">
+                    <div class="product-qty qty-btn" id="qty-inc">+</div>
+                    <div class="product-qty" id="qty-number">1</div>
+                    <div class="product-qty qty-btn" id="qty-dec">-</div>
                 </div>
             </div>
 
-            <div class="shipping">
-                <p>🚚 <strong>Ship to an address</strong> — FREE SHIPPING</p>
-                <p class="in-stock">✅ In Stock</p>
-            </div>
-
-            <button class="add-to-bag">ADD TO BAG</button>
+            <button class="add-to-bag" id="addToBag" data-product_id="<?php echo $product_id;?>"
+                data-user_id="<?php echo $user_id;?>">ADD TO BAG</button>
 
             <div class="status-box">
                 <p><strong>STATUS:</strong> Get points. Gain access. Boost your status. Use your STATUS across our brand
                     family.</p>
-                <a href="#">Join STATUS Now ›</a>
+                <a href="http://sneaker-head.local/main/pages/register.php">Join STATUS Now ›</a>
             </div>
         </div>
     </div>

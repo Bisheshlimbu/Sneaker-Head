@@ -145,3 +145,41 @@
   color: #3faaff;
   text-decoration: none;
 }
+.brand-item {
+  background-color: #1e1e1e;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.selected {
+  border: 2px solid #00bfff;
+}
+
+.qty-wrapper {
+  /* border: 1px solid; */
+  .qty-container {
+    /* border: 1px solid; */
+    background-color: #1e1e1e;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    /* background-color: red; */
+
+    .product-qty {
+      padding: 20px;
+      border: 1px solid;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+  .qty-btn:hover {
+    background-color: #333;
+  }
+}

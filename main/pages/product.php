@@ -30,8 +30,7 @@
             <li>New Balance Classics</li>
         </ul>
 
-        <h2>New Arrivals</h2>
-        <h2>Best Sellers</h2>
+       
     </aside>
 
     <!-- Main Content -->

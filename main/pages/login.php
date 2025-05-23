@@ -14,6 +14,7 @@ if(isset($_POST['login_btn'])){
     $user=$checkStmt->fetch(PDO::FETCH_ASSOC);
 
     if($count==1){
+        
       echo "login Successfully.";
 
       session_start();
@@ -21,7 +22,11 @@ if(isset($_POST['login_btn'])){
       $_SESSION['email'] = $email;
      
             
-      header("Location: http://sneaker-head.local/");
+      if($user['role']=='admin'){
+        header("Location: http://sneaker-head.local/main/pages/admin.php");
+      }else{
+        header("Location: http://sneaker-head.local/");
+      }
     }else{
       echo "Wrong Password or Email.";
     }
@@ -49,38 +54,39 @@ if(isset($_POST['login_btn'])){
 </head>
 
 <body>
+    <div class="login_wrapper">
+        <div class="container">
+            <header>
+                <h1><a href="http://sneaker-head.local/"><span class="brand-white">SNEAKER</span> <span class="brand-blue">HEAD</span></a></h1>
+            </header>
 
-    <div class="container">
-        <header>
-            <h1><span class="brand-white">SNEAKER</span> <span class="brand-blue">HEAD</span></h1>
-        </header>
+            <section class="login-section">
+                <h2>SIGN IN</h2>
+                <form method="post" action="login.php">
+                    <input type="email" name="email" placeholder="Email" required>
 
-        <section class="login-section">
-            <h2>SIGN IN</h2>
-            <form method="post" action="login.php">
-                <input type="email" name="email" placeholder="Email" required>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <span id="togglePassword">Show</span>
+                    </div>
 
-                <div class="password-wrapper">
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                    <span id="togglePassword">Show</span>
-                </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot your password?</a>
+                    </div>
 
-                <div class="forgot-password">
-                    <a href="#">Forgot your password?</a>
-                </div>
+                    <button type="submit" name="login_btn" class="sign-in-btn">SIGN IN</button>
+                </form>
+            </section>
 
-                <button type="submit" name="login_btn" class="sign-in-btn">SIGN IN</button>
-            </form>
-        </section>
-
-        <section class="register-section">
-            <div class="user-icon">👤</div>
-            <h3>Gain Access. Get Sneakers. Boost Your Confidence.</h3>
-            <p>Sign up to view and purchase our products in best prices.</p>
-            <p>Create an account today and start browsing the our best brands</p>
-            <a href="#" class="learn-more">Learn More</a>
-            <button onclick="window.location.href='register.php'" class="create-account-btn">CREATE ACCOUNT</button>
-        </section>
+            <section class="register-section">
+                <div class="user-icon">👤</div>
+                <h3>Gain Access. Get Sneakers. Boost Your Confidence.</h3>
+                <p>Sign up to view and purchase our products in best prices.</p>
+                <p>Create an account today and start browsing the our best brands</p>
+                <a href="#" class="learn-more">Learn More</a>
+                <button onclick="window.location.href='register.php'" class="create-account-btn">CREATE ACCOUNT</button>
+            </section>
+        </div>
     </div>
 
     <script>
