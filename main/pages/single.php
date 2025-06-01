@@ -5,6 +5,32 @@ $product=getProductDetailsByProduct_id($product_id);
 // var_dump($product);
 
 $attachments=getProductAttachmentsByProduct_id($product_id);
+
+
+$brand_meta = getUserMeta($user_id, '_brand_preferences');
+$brand_meta = is_array($brand_meta) ? $brand_meta : [];
+
+$category_meta = getUserMeta($user_id, '_category_preferences');
+$category_meta = is_array($category_meta) ? $category_meta : [];
+
+$type_meta = getUserMeta($user_id, '_type_preferences');
+$type_meta = is_array($type_meta) ? $type_meta : [];
+
+
+// $user_details=getUsersDetailsById($user_id);
+$user_profile=[
+    'brand'=>$brand_meta,
+    'category'=>$category_meta,
+    'type'=>$type_meta
+];
+
+$recommended=getRecommendedProducts($user_profile);
+// echo "<pre>";
+// var_dump($recommended);
+// echo "<pre>";
+
+
+
 ?>
 <div class="single-container">
     <!-- <nav class="breadcrumb">Home / Men / Shoes / Casual</nav> -->
@@ -41,7 +67,7 @@ $attachments=getProductAttachmentsByProduct_id($product_id);
             </div>
 
             <div class="sizes">
-                <p><strong>Size</strong></p>
+                <p><strong>Size</strong><span id="selectSize"></span></p>
                 <div class="size-grid">
                     <?php
                         if (isset($product['size'])) {
@@ -60,7 +86,7 @@ $attachments=getProductAttachmentsByProduct_id($product_id);
                         ?>
                 </div>
             </div>
-             <div class="qty-wrapper">
+            <div class="qty-wrapper">
                 <p><strong>Quantity:</strong></p>
                 <div class="qty-container">
                     <div class="product-qty qty-btn" id="qty-inc">+</div>

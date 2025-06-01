@@ -22,7 +22,7 @@ $users = getUsersDetailsById($user_id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneaker Head</title>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="http://sneaker-head.local/assets/css/style.css">
     <link rel="stylesheet" href="http://sneaker-head.local/assets/css/single.css">
 
@@ -30,6 +30,9 @@ $users = getUsersDetailsById($user_id);
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="http://sneaker-head.local/assets/js/script.js"></script>
+    <!-- Include SweetAlert2 CSS and JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
@@ -53,7 +56,7 @@ $users = getUsersDetailsById($user_id);
                     if(isset($users) && !empty($users)){
                         ?>
                     <!-- <a href="#"><?php //echo $users['username']?></a> -->
-                   <a href="http://sneaker-head.local/main/pages/profile.php"><i class="fa-regular fa-user"></i></a> 
+                    <a href="http://sneaker-head.local/main/pages/profile.php"><i class="fa-regular fa-user"></i></a>
                     <?php
                     }else{
                         ?>
@@ -67,7 +70,8 @@ $users = getUsersDetailsById($user_id);
                     }
                     ?>
 
-                    <a href="http://sneaker-head.local/main/pages/cart.php">Bag <i class="fa-solid fa-bag-shopping"></i></a>
+                    <a href="http://sneaker-head.local/main/pages/cart.php">Bag <i
+                            class="fa-solid fa-bag-shopping"></i></a>
                     <?php
                     if(isset($users) && !empty($users)){
                         ?>
@@ -81,9 +85,12 @@ $users = getUsersDetailsById($user_id);
             </div>
         </div>
         <nav class="category-nav">
-            <a href="/main/pages/product.php?category=men">Men</a>
-            <a href="/main/pages/product.php?category=women">Women</a>
-            <a href="/main/pages/product.php?category=kid">Kids</a>
+            <?php
+            $category=isset($_GET['category'])?$_GET['category']:"";
+            ?>
+            <a href="/main/pages/product.php?category=men" class="<?php echo $category=='men'?'category-nav-active':''?>">Men</a>
+            <a href="/main/pages/product.php?category=women" class="<?php echo $category=='women'?'category-nav-active':''?>">Women</a>
+            <a href="/main/pages/product.php?category=kid" class="<?php echo $category=='kid'?'category-nav-active':''?>">Kids</a>
             <a href="#">Sale</a>
             <a href="#new-arrival">Sneaker Releases</a>
         </nav>

@@ -16,6 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($data['action'])) {
             case 'update_user_preferences':
                 ajax_user_meta($data, $user_id);
                 break;
+                 case 'add_to_cart':
+                ajax_add_to_Cart($data);
+                break;
             }
     } catch (Exception $e) {
         error_log('Error processing request: ' . $e->getMessage());
@@ -39,6 +42,24 @@ function ajax_user_meta($params, $user_id){
         echo json_encode(['status'=>'success', 'message'=>'Successfully Updated.']);
        }else{
          echo json_encode(['status'=>'error', 'message'=>'Failed to Update.']);
+       }
+
+    } catch (\Throwable $th) {
+        error_log('Error processing request: ' . $e->getMessage());
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+
+
+function ajax_add_to_Cart($params){
+    try {
+       $response= saveCartItems($params);
+
+       if($response){
+        echo json_encode(['status'=>'success', 'message'=>'Successfully Added to Cart.']);
+       }else{
+         echo json_encode(['status'=>'error', 'message'=>'Failed to add to cart.']);
        }
 
     } catch (\Throwable $th) {
