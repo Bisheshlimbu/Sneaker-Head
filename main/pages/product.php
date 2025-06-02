@@ -55,7 +55,7 @@ $arrivel=isset($_GET['arrivel'])?$_GET['arrivel']:"";
             <div class="card-details">
                 <h3><?php echo $product['title'];?></h3>
                 <p class="colors"><?php echo $product['brand']?></p>
-                <p class="price">$<?php echo $product['price']?></p>
+                <p class="price">RS.<?php echo $product['price']?></p>
 
             </div>
         </a>

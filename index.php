@@ -144,73 +144,39 @@ include_once(__DIR__ . '/main/header.php');
     <!-- Recommendations Carousel -->
     <section class="recommendations">
         <h2>RECOMMENDED FOR YOU</h2>
-        <div class="carousel">
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
+        <div class="carousel-wrapper">
+            <div class="carousel">
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="assets/images/shoes2.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="assets/images/shoes1.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="assets/images/shoes3.jpg" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p>Air Jordan 1</p>
-                    <span>JOrdan</span>
-                    <p class="product-price">$5000</p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -228,21 +194,13 @@ include_once(__DIR__ . '/main/header.php');
         
             foreach($newProducts as $newProduct){
                 ?>
-            <a href="main/pages/single.php?pid=<?php echo $newProduct['id']?>" class="product-card">
-                <span class="imageContainer recommended-product-img">
-                    <img src="http://sneaker-head.local/<?php echo $newProduct['product_image']?>" alt="Sneaker">
-                </span>
-                <div class="product-desc">
-                    <p><?php echo $newProduct['title'];?></p>
-                    <span><?php echo $newProduct['brand']?></span>
-                    <p class="product-price">$<?php echo $newProduct['price']?></p>
-                    <span>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
+            <a href="main/pages/single.php?pid=<?php echo $newProduct['id']?>" class="card">
+                <img src="http://sneaker-head.local/<?php echo $newProduct['product_image']?>"
+                    alt="Air Jordan Retro 12">
+                <div class="card-details">
+                    <h3><?php echo $newProduct['title'];?></h3>
+                    <p class="colors"><?php echo $newProduct['brand']?></p>
+                    <p class="price">Rs.<?php echo " ".$newProduct['price']?></p>
                 </div>
             </a>
             <?php

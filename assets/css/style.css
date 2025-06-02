@@ -27,8 +27,9 @@ body {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 30px;
+  font-weight: italic;
+  
   /* width: 50%; */
   /* margin-left: 200px; */
 }
@@ -108,12 +109,14 @@ body {
   display: flex;
   justify-content: center;
   gap: 50px;
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
   padding: 10px;
 }
 
 .category-nav a {
   text-decoration: none;
+  font-weight: italic;
+  font: size 15px;
   /* color: #333; */
 }
 .category-nav a:hover {
@@ -208,8 +211,8 @@ c h2 {
   margin-bottom: 5px;
 }
 .recommended-product-img {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
 }
 .imageContainer img {
   object-fit: cover;
@@ -218,7 +221,7 @@ c h2 {
   border-radius: 8px;
 }
 .recommended-product-img img {
-  height: 200px;
+  height: 300px;
 }
 .brands {
   display: flex;
@@ -267,6 +270,7 @@ c h2 {
 
 .carousel {
   display: flex;
+  margin-top:5px;
   gap: 20px;
   flex-wrap: wrap;
   a {
@@ -511,7 +515,7 @@ a {
 
 .price {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.5rem;
   margin-bottom: 8px;
 }
 

@@ -24,10 +24,8 @@ $user_profile=[
     'type'=>$type_meta
 ];
 
-$recommended=getRecommendedProducts($user_profile);
-// echo "<pre>";
-// var_dump($recommended);
-// echo "<pre>";
+// $recommended=getRecommendedProducts($user_profile);
+
 
 
 
@@ -58,14 +56,8 @@ $recommended=getRecommendedProducts($user_profile);
         <!-- Right: Details -->
         <div class="product-info">
             <h1><?php echo ucfirst($product['title'])?></h1>
-            <p class="price">$<?php echo ' '. $product['price']?></p>
-            <p class="pay-info">Or 4 interest-free payments with Klarna, Afterpay, or PayPal</p>
-
-            <div class="color-section">
-                <!-- <p><strong>Color:</strong> White/Light Zen Grey/Total Orange/Cool Grey</p> -->
-                <img src="http://sneaker-head.local/assets/images/favs.jpg" alt="Color thumbnail" class="color-thumb">
-            </div>
-
+            <p class="price">RS.<?php echo ' '. $product['price']?></p>
+            <p class=""><?php echo ' '. $product['description']?></p>
             <div class="sizes">
                 <p><strong>Size</strong><span id="selectSize"></span></p>
                 <div class="size-grid">
@@ -103,6 +95,27 @@ $recommended=getRecommendedProducts($user_profile);
                     family.</p>
                 <a href="http://sneaker-head.local/main/pages/register.php">Join STATUS Now ›</a>
             </div>
+            <div class="favbtn">
+                <button class="favorite-button">
+                    <strong>Favorite</strong> 🤍
+                </button>
+            </div>
+           
+
         </div>
     </div>
 </div>
+<script>
+function toggleAccordion(id) {
+    const content = document.getElementById(id);
+    const caret = document.querySelector(`#${id}-caret`) || content.previousElementSibling.querySelector('.caret');
+
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        caret.classList.remove("rotate");
+    } else {
+        content.style.display = "block";
+        caret.classList.add("rotate");
+    }
+}
+</script>

@@ -75,8 +75,8 @@ function getProductDetailsForNew(){
         global $conn;
         $stmt = $conn->prepare("SELECT * 
 FROM products
-WHERE STR_TO_DATE(created_at, '%b-%d-%Y') >= CURDATE() - INTERVAL 7 DAY
-LIMIT 5");
+WHERE STR_TO_DATE(created_at, '%M-%d-%Y') >= CURDATE() - INTERVAL 7 DAY
+LIMIT 4");
         // $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {

@@ -102,23 +102,54 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
   /**add product for checkout */
   $('input[name="selected_products[]"]').change(function () {
-  // Get all checked checkboxes
-  var checkedBoxes = $('input[name="selected_products[]"]:checked');
+    // Get all checked checkboxes
+    var checkedBoxes = $('input[name="selected_products[]"]:checked');
 
-  // Count checked items
-  var checkedCount = checkedBoxes.length;
+    // Count checked items
+    var checkedCount = checkedBoxes.length;
 
-  // Calculate total price sum
-  var totalSum = 0;
-  checkedBoxes.each(function () {
-    // Get total price from data attribute (make sure it's a number)
-    var price = parseFloat($(this).data('total_price')) || 0;
-    totalSum += price;
+    // Calculate total price sum
+    var totalSum = 0;
+    checkedBoxes.each(function () {
+      // Get total price from data attribute (make sure it's a number)
+      var price = parseFloat($(this).data("total_price")) || 0;
+      totalSum += price;
+    });
+
+    // You can also update the UI with these values, for example:
+    $("#checked-count").text(checkedCount);
+    $(".total-price").text("Rs. " + totalSum.toFixed(2));
   });
 
-  // You can also update the UI with these values, for example:
-  $('#checked-count').text(checkedCount);
-  $('.total-price').text('Rs. ' + totalSum.toFixed(2));
-});
+  /**recommended product seciton carasoul start */
+// $(document).ready(function () {
+//     const $carousel = $('.carousel');
+//     const $cards = $carousel.children();
+//     const cardCount = $cards.length;
 
+//     // Clone all cards and append to the carousel
+//     $cards.clone().appendTo($carousel);
+
+//     let leftPosition = 0;
+//     const speed = 1; // pixels per frame
+
+//     function scroll() {
+//         leftPosition -= speed;
+//         if (Math.abs(leftPosition) >= $carousel[0].scrollWidth / 2) {
+//             leftPosition = 0;
+//         }
+//         $carousel.css('left', leftPosition + 'px');
+//         requestId = requestAnimationFrame(scroll);
+//     }
+
+//     let requestId = requestAnimationFrame(scroll);
+
+//     // Pause on hover
+//     $('.carousel-wrapper').hover(
+//         () => cancelAnimationFrame(requestId),
+//         () => requestId = requestAnimationFrame(scroll)
+//     );
+// });
+
+  /**recommended product seciton carasoul ends */
 });

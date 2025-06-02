@@ -32,6 +32,9 @@ if($user_id){
 
 .summary-section {
     width: 30%;
+    p{
+        margin-top:10px;
+    }
 }
 
 .product-section h2 {
@@ -73,7 +76,7 @@ if($user_id){
     margin-left: 50px;
 }
 
-.product-details h3 {
+.product-details h3, p {
     margin: 0 0 10px;
 }
 
@@ -185,7 +188,7 @@ input[type="checkbox"] {
     </div>
 
     <div class="summary-section">
-        <div>
+        <!-- <div> -->
             <h2>Purchase Summary</h2>
 
             <p>Subtotal (<span id="checked-count"></span> item): <strong class="total-price"></strong></p>
@@ -197,5 +200,5 @@ input[type="checkbox"] {
             <button class="checkout-button">PROCEED TO CHECKOUT</button>
             <button class="afterpay-button">Pay now with esewa</button>
             <!-- <button class="more-options">+ MORE PAYMENT OPTIONS</button> -->
-        </div>
+        <!-- </div> -->
     </div>
