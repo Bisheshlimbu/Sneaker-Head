@@ -3,243 +3,180 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sneaker Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Product List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-    body {
-      background-color: #111;
-      font-family: Arial, sans-serif;
-      color: #fff;
+    /* body {
       margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
       padding: 40px;
-    }
-
-    .card-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        margin-top:40px;
-    }
-
-    .card {
-        background-color: #151515;
-        border-radius: 8px;
-        overflow: hidden;
-        width: 320px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        transition: transform 0.2s;
-        border: 1px solid black;
-    }
-
-    /* .card:hover {
-        transform: scale(1.03);
     } */
 
-    .card img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-        display: block;
+    h1 {
+        font-size: 32px;
+        color: #ffffff;
     }
 
-    .card-details {
-        padding: 20px;
+    p.subtitle {
+        color: #888;
     }
 
-    .colors {
-        color: #aaa;
-        font-size: 0.95rem;
-        margin-bottom: 10px;
-    }
-
-    .card h3 {
-        font-size: 1.1rem;
-        margin: 5px 0 12px;
-    }
-
-    .price {
-        font-weight: bold;
-        font-size: 1rem;
-        margin-bottom: 8px;
-    }
-
-    .trending {
-        color: #00d2ff;
-        font-size: 0.9rem;
-    }
-
-    .shop-mens {
-        background-color: #0e0e0e;
-        padding: 0 20px;
-        padding-top:10px;
-        font-family: sans-serif;
-    }
-
-    .shop-mens h2 {
-        color: #fff;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    .category-buttons {
+    .top-bar {
         display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
+        justify-content: flex-end;
+        gap: 10px;
+        margin: 20px 0;
     }
 
-    .category-buttons button, select {
-        background-color: transparent;
-        color: #fff;
-        border: 1px solid #444;
-        border-radius: 50px;
-        padding: 10px 20px;
-        font-size: 14px;
-        font-weight: bold;
+    .top-bar button {
+        padding: 10px 16px;
+        border: none;
         cursor: pointer;
-        transition: all 0.3s ease;
+        border-radius: 6px;
+        font-weight: 600;
     }
 
-    .category-buttons button:hover {
-        background-color: #fff;
-        color: #000;
+    .btn-export,
+    .btn-import {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .btn-create {
+        background-color: #00c2b2;
+        color: #fff;
+    }
+
+    .filters {
+        background-color: #2a2a2a;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        border-radius: 10px;
+        align-items: center;
+    }
+
+    select,
+    input[type="date"] {
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        background-color: #1e1e1e;
+        color: #fff;
+    }
+
+    .product-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .product-row {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #333;
+    }
+
+    .product-row img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+
+    .product-name {
+        flex: 2;
+    }
+
+    .product-price,
+    .product-status,
+    .product-date,
+    .product-actions {
+        flex: 1;
+        text-align: center;
+    }
+
+    .status {
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        display: inline-block;
+    }
+
+    .active {
+        background-color: #1f7a1f;
+    }
+
+    .archived {
+        background-color: #b87333;
+    }
+
+    .disabled {
+        background-color: #a52a2a;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        padding: 6px 12px;
+        margin: 0 4px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-edit {
+        background-color: #00c2b2;
+        color: #fff;
+    }
+
+    .btn-delete {
+        background-color: #333;
+        color: #fff;
     }
     </style>
 </head>
 
 <body>
+    <h1>Products List</h1>
+    <!-- <p class="subtitle">.</p> -->
 
-    <body>
-        <section class="shop-mens">
-            <h2>SHOP MEN’S</h2>
-            <div class="category-buttons">
-                <button>All Shoes</button>
-                <button>Casual Shoes</button>
-                <button>Running Shoes</button>
-                <button>Basketball Shoes</button>
-                <button>All Clothing</button>
-                <button>Sweatpants & Joggers</button>
-                <button>Hoodies & Sweatshirts</button>
-            </div>
-            
-        </section>
-         <section class="shop-mens">
-            <h3>BRANDS</h3>
-            <div class="category-buttons">
-                <select>
-                  <option>Filter By Brands</option>
-                  <option>Filter By Brands</option>
-                  <option>Filter By Brands</option>
-                  <option>Filter By Brands</option>
-                </select>
-                <button>Casual Shoes</button>
-                <button>Running Shoes</button>
-                <button>Basketball Shoes</button>
-                <button>All Clothing</button>
-                <button>Sweatpants & Joggers</button>
-                <button>Hoodies & Sweatshirts</button>
-            </div>
-            
-        </section>
+    <div class="top-bar">
 
-        <div class="card-container">
+        <button class="btn-create">Create new</button>
+    </div>
 
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
+    <div class="filters">
+        <select>
+            <option>All category</option>
+            <option>Casuals</option>
+            <option>Running</option>
+            <option>Basketball</option>
+            <option>Retro</option>
+        </select>
+        <input type="date">
 
+    </div>
 
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
+    <div class="product-table">
+        <div class="product-row">
+            <input type="checkbox">
+            <img src="https://via.placeholder.com/50" alt="Product">
+            <div class="product-name">T-shirt for men medium size</div>
+            <div class="product-price">$34.50</div>
+            <div class="product-status"><span class="status active">Active</span></div>
+            <div class="product-date">02.11.2022</div>
+            <div class="product-actions">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
             </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="https://static.nike.com/a/images/t_prod_ss/w_960,c_limit,f_auto/f83b1d6b-f6c7-47a6-822e-88ec2b8c7894/image.jpg"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <p class="colors">1 color</p>
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-
         </div>
-    </body>
+        <!-- Repeat similar product-row divs for other products -->
+    </div>
+</body>
 
 </html>

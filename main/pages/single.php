@@ -100,22 +100,98 @@ $user_profile=[
                     <strong>Favorite</strong> 🤍
                 </button>
             </div>
-           
+            <div class="p-description">
+                <h2>Description</h2>
+                <p>When her team needs her, A'ja Wilson delivers.
+                    Every. Single. Time. Inspired by the three-time
+                    MVP's zodiac sign, this radiant A'One celebrates
+                    the born leader she was destined to be. Plush
+                    foam underfoot helps provide unapologetic
+                    comfort, so she's fresh and ready to shine
+                    however the moment demands. Because when
+                    the spotlight is on, A'ja owns it.</p>
+            </div>
+            
+
 
         </div>
     </div>
 </div>
-<script>
-function toggleAccordion(id) {
-    const content = document.getElementById(id);
-    const caret = document.querySelector(`#${id}-caret`) || content.previousElementSibling.querySelector('.caret');
-
-    if (content.style.display === "block") {
-        content.style.display = "none";
-        caret.classList.remove("rotate");
-    } else {
-        content.style.display = "block";
-        caret.classList.add("rotate");
-    }
-}
-</script>
+<section class="recommendations">
+        <h2>RECOMMENDED FOR YOU</h2>
+        <div class="carousel-wrapper">
+            <div class="carousel">
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="recommendations">
+        <h2>RECENTLY VIEWED</h2>
+        <div class="carousel-wrapper">
+            <div class="carousel">
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

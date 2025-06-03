@@ -121,35 +121,5 @@ $(document).ready(function () {
     $(".total-price").text("Rs. " + totalSum.toFixed(2));
   });
 
-  /**recommended product seciton carasoul start */
-// $(document).ready(function () {
-//     const $carousel = $('.carousel');
-//     const $cards = $carousel.children();
-//     const cardCount = $cards.length;
-
-//     // Clone all cards and append to the carousel
-//     $cards.clone().appendTo($carousel);
-
-//     let leftPosition = 0;
-//     const speed = 1; // pixels per frame
-
-//     function scroll() {
-//         leftPosition -= speed;
-//         if (Math.abs(leftPosition) >= $carousel[0].scrollWidth / 2) {
-//             leftPosition = 0;
-//         }
-//         $carousel.css('left', leftPosition + 'px');
-//         requestId = requestAnimationFrame(scroll);
-//     }
-
-//     let requestId = requestAnimationFrame(scroll);
-
-//     // Pause on hover
-//     $('.carousel-wrapper').hover(
-//         () => cancelAnimationFrame(requestId),
-//         () => requestId = requestAnimationFrame(scroll)
-//     );
-// });
-
-  /**recommended product seciton carasoul ends */
+  alert('asldfhlksad')
 });

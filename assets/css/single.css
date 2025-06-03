@@ -185,6 +185,7 @@
 }
 .favbtn{
   margin: 10px;
+  
 }
 .favorite-button {
   background-color: #111; /* black background */
@@ -203,6 +204,30 @@
 .favorite-button:hover {
   background-color: #222; /* darker on hover */
 }
+.p-description {
+  background-color: #111; /* Dark background */
+  color: #fff; /* White text */
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.p-description h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #e6e6e6;
+}
+
+.p-description p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #ccc;
+  margin: 0;
+  white-space: pre-line; /* respects line breaks */
+}
+
 
 
 

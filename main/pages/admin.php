@@ -24,9 +24,7 @@ if (empty($user_id)) {
             <h1>Good Morning, Bishesh</h1>
             <p>Here’s what’s happening on your store today. See the statistics at once.</p>
         </div>
-        <a href="add_product.php">
-            <button class="add-product-btn">+ Add Product</button>
-        </a>
+       
     </header>
 
     <section class="stats">

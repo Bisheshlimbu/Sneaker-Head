@@ -22,6 +22,61 @@ function getUsersDetailsById($user_id){
     }
 }
 
+
+function getAllProjects(){
+    try {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM products");
+        // $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $projects;
+        }
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+function updateProductDetails($params){
+    try {
+        global $conn;
+        $updated_at = strtolower(date('F-d-Y'));
+        $sizeString = is_array($params['size']) ? implode(',', $params['size']) : $params['size'];
+
+        $stmt = $conn->prepare("UPDATE products SET title=:title, price=:price, category=:category, brand=:brand, type=:type, size=:size,
+        description=:description, updated_at=:updated_at WHERE id=:id");
+
+        $stmt->bindParam(':id', $params['id'], PDO::PARAM_INT);
+        $stmt->bindParam(':title', $params['title'], PDO::PARAM_STR);
+        $stmt->bindParam(':price', $params['price'], PDO::PARAM_STR);
+        $stmt->bindParam(':category', $params['category'], PDO::PARAM_STR);
+        $stmt->bindParam(':brand', $params['brand'], PDO::PARAM_STR);
+        $stmt->bindParam(':type', $params['type'], PDO::PARAM_STR);
+        $stmt->bindParam(':size', $sizeString, PDO::PARAM_STR);
+        $stmt->bindParam(':description', $params['desc'], PDO::PARAM_STR);
+        $stmt->bindParam(':updated_at', $updated_at, PDO::PARAM_STR);
+
+        if($stmt->execute()){
+            return true;
+        };
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+  
+
 function getProductDetails($brand, $type, $category, $arrivel) {
     try {
         global $conn;
