@@ -113,7 +113,6 @@ $(document).ready(function () {
       type: type,
       action: "update_product",
     };
-
     $.ajax({
       type: "POST",
       url: "http://sneaker-head.local/main/pages/ajax-request.php",
@@ -126,10 +125,9 @@ $(document).ready(function () {
           $("#update_product_message").addClass("success-message");
           setTimeout(function () {
             $("#update_product_message").html("");
-          $("#update_product_message").removeClass("error-message");
-          $("#update_product_message").removeClass("success-message");
-
-          }, 2000);
+            $("#update_product_message").removeClass("error-message");
+            $("#update_product_message").removeClass("success-message");
+          }, 3000);
         } else {
           $("#update_product_message").html(response.message);
           $("#update_product_message").removeClass("success-message");
@@ -137,11 +135,7 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        Swal.fire({
-          icon: "error",
-          title: "AJAX Error",
-          text: error,
-        });
+        $("#update_product_message").html("Error occoured");
       },
     });
   });

@@ -51,6 +51,11 @@
   margin-top: 10px;
 }
 
+.hide{
+  /* display:none; */
+  opacity:0;
+}
+
 .thumbnails img {
   width: 100px;
   height: 100px;
@@ -73,9 +78,10 @@
 }
 
 .price {
-  font-size: 24px;
+  font-size: 15px;
   color: #fff;
   margin: 10px 0;
+  margin-top: 20px;
 }
 
 .pay-info {

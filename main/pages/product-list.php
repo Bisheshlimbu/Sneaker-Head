@@ -95,6 +95,7 @@ input[type="date"] {
     object-fit: cover;
     border-radius: 5px;
     margin-right: 20px;
+    margin-left: 20px;
 }
 
 .product-name {

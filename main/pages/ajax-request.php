@@ -22,6 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($data['action'])) {
                   case 'update_product':
                 ajax_update_product($data);
                 break;
+                 case 'add_to_fav':
+                ajax_add_to_fav($data);
+                break;
             }
     } catch (Exception $e) {
         error_log('Error processing request: ' . $e->getMessage());
@@ -72,13 +75,33 @@ function ajax_add_to_Cart($params){
 }
 
 function ajax_update_product($params){
-// var_dump($params);
   try {
        $response= updateProductDetails($params);
        if($response){
         echo json_encode(['status'=>'success', 'message'=>'Product Updated Successfully.']);
        }else{
          echo json_encode(['status'=>'error', 'message'=>'Failed to update product.']);
+       }
+
+    } catch (\Throwable $th) {
+        error_log('Error processing request: ' . $e->getMessage());
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+
+function ajax_add_to_fav($params){
+    
+  try {
+       $response= add_to_fav($params);
+       if($response['status']=='success'){
+        if($response['like']==1){
+        echo json_encode(['status'=>'success', 'message'=>'Product added to favorites!']);
+
+        }else{
+        echo json_encode(['status'=>'success', 'message'=>'Product remove from favorites!']);
+
+        }
        }
 
     } catch (\Throwable $th) {

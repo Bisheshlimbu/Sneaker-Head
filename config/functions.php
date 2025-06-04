@@ -44,10 +44,19 @@ function getAllProjects(){
 }
 
 function updateProductDetails($params){
+   
     try {
         global $conn;
         $updated_at = strtolower(date('F-d-Y'));
-        $sizeString = is_array($params['size']) ? implode(',', $params['size']) : $params['size'];
+
+$sizes = $params['size']; // original array of strings
+
+// Convert each element to int
+$sizes_int = array_map('intval', $sizes);
+
+// Encode to JSON string (numbers, no quotes)
+$json_sizes = json_encode($sizes_int);
+
 
         $stmt = $conn->prepare("UPDATE products SET title=:title, price=:price, category=:category, brand=:brand, type=:type, size=:size,
         description=:description, updated_at=:updated_at WHERE id=:id");
@@ -58,7 +67,7 @@ function updateProductDetails($params){
         $stmt->bindParam(':category', $params['category'], PDO::PARAM_STR);
         $stmt->bindParam(':brand', $params['brand'], PDO::PARAM_STR);
         $stmt->bindParam(':type', $params['type'], PDO::PARAM_STR);
-        $stmt->bindParam(':size', $sizeString, PDO::PARAM_STR);
+        $stmt->bindParam(':size', $json_sizes, PDO::PARAM_STR);
         $stmt->bindParam(':description', $params['desc'], PDO::PARAM_STR);
         $stmt->bindParam(':updated_at', $updated_at, PDO::PARAM_STR);
 
@@ -229,6 +238,28 @@ function updateUserMeta($user_id, $meta_key, $meta_value){
 
 
 
+
+function get_all_project_details(){
+    try {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM products");
+       
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                   
+        return $products;
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+
+
 function getUserMeta($user_id, $meta_key){
     try {
         global $conn;
@@ -306,6 +337,100 @@ function saveCartItems($params){
         return "An error occurred: " . $e->getMessage();
     }
 }
+
+function add_to_fav($params) {
+    try {
+       
+        global $conn;
+
+        $product_id = $params['product_id'];
+        $user_id = $params['user_id'];
+ 
+        // First check if the product_id already exists
+        $checkStmt = $conn->prepare("SELECT id FROM product_meta WHERE product_id = :product_id AND user_id=:user_id");
+        $checkStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $checkStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $checkStmt->execute();
+
+        if ($checkStmt->rowCount() > 0) {
+            
+            // Product already exists — update the 'like' value
+            $updateStmt = $conn->prepare("UPDATE product_meta SET `like` = :like WHERE product_id = :product_id AND user_id=:user_id");
+            $updateStmt->bindParam(':like', $params['like'], PDO::PARAM_INT);
+            $updateStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $updateStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $updateStmt->execute();
+            return ['status'=>'success','like'=>$params['like']];
+        } else {
+            
+            // Product doesn't exist — insert a new row
+            $insertStmt = $conn->prepare("INSERT INTO product_meta (user_id, product_id, `like`) VALUES (:user_id, :product_id, :like)");
+            $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $insertStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+            $insertStmt->bindParam(':like', $params['like'], PDO::PARAM_INT);
+            $insertStmt->execute();
+            return ['status'=>'success','like'=>$params['like']];
+        }
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    } catch (Exception $e) {
+        error_log("General error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+function get_fav_data($product_id) {
+    try {
+        global $conn;
+
+        // First check if the product_id already exists
+        $checkStmt = $conn->prepare("SELECT * FROM product_meta WHERE product_id = :product_id");
+        $checkStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $checkStmt->execute();
+        $existing = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        if($existing){
+            return $existing;
+        }else{
+            return [];
+        }
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    } catch (Exception $e) {
+        error_log("General error: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+function get_fav_data_by_user_id($user_id) {
+    try {
+        global $conn;
+
+        // First check if the product_id already exists
+        $checkStmt = $conn->prepare("SELECT product_id FROM product_meta WHERE user_id = :user_id AND like==1");
+        $checkStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $checkStmt->execute();
+        $existing = $checkStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if($existing){
+            return $existing;
+        }else{
+            return [];
+        }
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    } catch (Exception $e) {
+        error_log("General error: " . $e->getMessage());
+        return false;
+    }
+}
+
 
 function getCartDetails($user_id){
     try {

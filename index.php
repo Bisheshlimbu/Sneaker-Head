@@ -59,7 +59,7 @@ include_once(__DIR__ . '/main/header.php');
                     <p>Adidas</p>
                 </a>
             </div>
-            <div class="product-card">
+            <!-- <div class="product-card">
                 <a href="/main/pages/product.php?brand=asics">
                     <span class="imageContainer">
                         <img src="assets/images/asics.jpg" alt="Sneaker">
@@ -72,7 +72,7 @@ include_once(__DIR__ . '/main/header.php');
                     <span class="imageContainer">
                         <img src="assets/images/jordan11.jpg" alt="Sneaker">
                     </span>
-                    <p>Jordan</p>
+                    <p>Retro Jordan</p>
                 </a>
             </div>
             <div class="product-card">
@@ -90,9 +90,9 @@ include_once(__DIR__ . '/main/header.php');
                     </span>
                     <p>New Balance</p>
                 </a>
-            </div>
+            </div> -->
 
-            <!-- Add more cards if needed -->
+            
         </div>
     </section>
 
@@ -142,7 +142,7 @@ include_once(__DIR__ . '/main/header.php');
     </section>
 
     <!-- Recommendations Carousel -->
-    <section class="recommendations">
+    <!-- <section class="recommendations">
         <h2>RECOMMENDED FOR YOU</h2>
         <div class="carousel-wrapper">
             <div class="carousel">
@@ -180,7 +180,7 @@ include_once(__DIR__ . '/main/header.php');
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- New Arrivals -->
     <?php

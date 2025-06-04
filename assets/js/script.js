@@ -120,6 +120,57 @@ $(document).ready(function () {
     $("#checked-count").text(checkedCount);
     $(".total-price").text("Rs. " + totalSum.toFixed(2));
   });
+  $("#add-to-fav").on("click", function () {
+    var $btn = $(this);
 
-  alert('asldfhlksad')
+    // Toggle heart icon style
+    $("#heart-icon").toggleClass("fa-regular fa-solid");
+
+    var product_id = $btn.data("product_id");
+    var user_id = $btn.data("user_id");
+
+    var like = $btn.data("like");
+    var newLike = like == 1 ? 0 : 1;
+
+    // Update data attribute & jQuery data cache before sending AJAX
+    $btn.attr("data-like", newLike);
+    $btn.data("like", newLike);
+
+    var data = {
+      product_id: product_id,
+      user_id: user_id,
+      like: like, // send updated like value
+      action: "add_to_fav",
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "http://sneaker-head.local/main/pages/ajax-request.php",
+      data: data,
+      dataType: "json",
+      success: function (response) {
+        if (response.status === "success") {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            html: response.message,
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message || "Something went wrong.",
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("AJAX Error:", error);
+        Swal.fire({
+          icon: "error",
+          title: "AJAX Error",
+          text: error,
+        });
+      },
+    });
+  });
 });
