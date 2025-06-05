@@ -1,182 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Product List</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-    /* body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #1e1e1e;
-      color: #ffffff;
-      padding: 40px;
-    } */
-
-    h1 {
-        font-size: 32px;
-        color: #ffffff;
+  <meta charset="UTF-8">
+  <title>4-Card jQuery Slider</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    .slider-container {
+      width: 1000px;
+      overflow: hidden;
+      position: relative;
+      margin: 40px auto;
     }
 
-    p.subtitle {
-        color: #888;
+    .slider {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
     }
 
-    .top-bar {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        margin: 20px 0;
+    .slide {
+      width: 250px;
+      margin-right: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .top-bar button {
-        padding: 10px 16px;
-        border: none;
-        cursor: pointer;
-        border-radius: 6px;
-        font-weight: 600;
+    .slide img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
 
-    .btn-export,
-    .btn-import {
-        background-color: #333;
-        color: #fff;
+    .slide .info {
+      padding: 10px;
+      font-family: sans-serif;
     }
 
-    .btn-create {
-        background-color: #00c2b2;
-        color: #fff;
+    .nav-btn {
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10;
     }
 
-    .filters {
-        background-color: #2a2a2a;
-        padding: 20px;
-        display: flex;
-        gap: 20px;
-        border-radius: 10px;
-        align-items: center;
-    }
-
-    select,
-    input[type="date"] {
-        padding: 10px;
-        border-radius: 6px;
-        border: none;
-        background-color: #1e1e1e;
-        color: #fff;
-    }
-
-    .product-table {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: collapse;
-    }
-
-    .product-row {
-        display: flex;
-        align-items: center;
-        padding: 15px;
-        border-bottom: 1px solid #333;
-    }
-
-    .product-row img {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 5px;
-        margin-right: 20px;
-    }
-
-    .product-name {
-        flex: 2;
-    }
-
-    .product-price,
-    .product-status,
-    .product-date,
-    .product-actions {
-        flex: 1;
-        text-align: center;
-    }
-
-    .status {
-        padding: 4px 10px;
-        border-radius: 15px;
-        font-size: 12px;
-        display: inline-block;
-    }
-
-    .active {
-        background-color: #1f7a1f;
-    }
-
-    .archived {
-        background-color: #b87333;
-    }
-
-    .disabled {
-        background-color: #a52a2a;
-    }
-
-    .btn-edit,
-    .btn-delete {
-        padding: 6px 12px;
-        margin: 0 4px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-edit {
-        background-color: #00c2b2;
-        color: #fff;
-    }
-
-    .btn-delete {
-        background-color: #333;
-        color: #fff;
-    }
-    </style>
+    .prev-btn { left: -50px; }
+    .next-btn { right: -50px; }
+  </style>
 </head>
-
 <body>
-    <h1>Products List</h1>
-    <!-- <p class="subtitle">.</p> -->
 
-    <div class="top-bar">
-
-        <button class="btn-create">Create new</button>
+<div class="slider-container">
+  <button class="nav-btn prev-btn">&#10094;</button>
+  <div class="slider">
+    <!-- Slide Cards -->
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 1</strong><br>$99</div>
     </div>
-
-    <div class="filters">
-        <select>
-            <option>All category</option>
-            <option>Casuals</option>
-            <option>Running</option>
-            <option>Basketball</option>
-            <option>Retro</option>
-        </select>
-        <input type="date">
-
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 2</strong><br>$89</div>
     </div>
-
-    <div class="product-table">
-        <div class="product-row">
-            <input type="checkbox">
-            <img src="https://via.placeholder.com/50" alt="Product">
-            <div class="product-name">T-shirt for men medium size</div>
-            <div class="product-price">$34.50</div>
-            <div class="product-status"><span class="status active">Active</span></div>
-            <div class="product-date">02.11.2022</div>
-            <div class="product-actions">
-                <button class="btn-edit">Edit</button>
-                <button class="btn-delete">Delete</button>
-            </div>
-        </div>
-        <!-- Repeat similar product-row divs for other products -->
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 3</strong><br>$79</div>
     </div>
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 4</strong><br>$69</div>
+    </div>
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 5</strong><br>$59</div>
+    </div>
+    <div class="slide">
+      <img src="http://sneaker-head.local/assets/images/asics.jpg">
+      <div class="info"><strong>Product 6</strong><br>$49</div>
+    </div>
+  </div>
+  <button class="nav-btn next-btn">&#10095;</button>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const slideWidth = $('.slide').outerWidth(true); // 250 + margin
+    const visibleSlides = 4;
+    const totalSlides = $('.slide').length;
+    let currentIndex = 0;
+
+    function updateSlider() {
+      const maxIndex = totalSlides - visibleSlides;
+      currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+      $('.slider').css('transform', `translateX(-${currentIndex * slideWidth}px)`);
+    }
+
+    $('.next-btn').click(function () {
+      currentIndex++;
+      updateSlider();
+    });
+
+    $('.prev-btn').click(function () {
+      currentIndex--;
+      updateSlider();
+    });
+  });
+</script>
+
 </body>
-
 </html>

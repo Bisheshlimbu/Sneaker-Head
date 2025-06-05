@@ -406,22 +406,18 @@ function get_fav_data($product_id) {
     }
 }
 
-
 function get_fav_data_by_user_id($user_id) {
     try {
         global $conn;
 
-        // First check if the product_id already exists
-        $checkStmt = $conn->prepare("SELECT product_id FROM product_meta WHERE user_id = :user_id AND like==1");
+        // Escape "like" with backticks if it's a column name
+        $checkStmt = $conn->prepare("SELECT product_id FROM product_meta WHERE user_id = :user_id AND `like` = 1");
         $checkStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $checkStmt->execute();
         $existing = $checkStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if($existing){
-            return $existing;
-        }else{
-            return [];
-        }
+        return $existing ?: []; // Return empty array if no data found
+
     } catch (PDOException $e) {
         error_log("Database error: " . $e->getMessage());
         return false;
@@ -430,6 +426,12 @@ function get_fav_data_by_user_id($user_id) {
         return false;
     }
 }
+
+function current_page() {
+    $currentPage = basename($_SERVER['PHP_SELF']); // gets 'profile.php'
+    return $currentPage;
+}
+
 
 
 function getCartDetails($user_id){
@@ -502,5 +504,154 @@ function getRecommendedProducts($user_profile) {
     } catch (Exception $e) {
         error_log("An error occurred: " . $e->getMessage());
         return "An error occurred: " . $e->getMessage();
+    }
+}
+
+
+//recommendation algorithm implementiaono
+
+function get_recommendation($user_id, $product_id){
+
+    $shoes = get_all_project_details(); // Fetch all products
+
+    $favourite = get_fav_data_by_user_id($user_id); // Liked products
+
+    //user preferences
+    $brand_meta = getUserMeta($user_id, '_brand_preferences');
+    $brand_meta = is_array($brand_meta) ? $brand_meta : [];
+
+    $category_meta = getUserMeta($user_id, '_category_preferences');
+    $category_meta = is_array($category_meta) ? $category_meta : [];
+
+    $type_meta = getUserMeta($user_id, '_type_preferences');
+    $type_meta = is_array($type_meta) ? $type_meta : [];
+
+    $cartDetails=getCartDetails($user_id);
+    
+    // Reindex shoes by ID and normalize fields
+    $shoesById = [];
+    foreach ($shoes as $shoe) {
+        $shoe['type']     = explode(',', str_replace(' ', '', $shoe['type']));
+        $shoe['brand']    = explode(',', str_replace(' ', '', $shoe['brand']));
+        $shoe['category'] = explode(',', str_replace(' ', '', $shoe['category']));
+        $shoesById[$shoe['id']] = $shoe;
+    }
+
+    // Clean liked product IDs
+    $likedIds = [];
+    if (is_array($favourite)) {
+        foreach ($favourite as $fav) {
+            if (is_array($fav) && isset($fav['product_id'])) {
+                $likedIds[] = $fav['product_id'];
+            } elseif (is_scalar($fav)) {
+                $likedIds[] = $fav;
+            }
+        }
+    }
+
+    $cartIds = []; // Add cart IDs if applicable
+    if (is_array($cartDetails)) {
+        foreach ($cartDetails as $cart) {
+            if (is_array($cart) && isset($cart['product_id'])) {
+                $cartIds[] = $cart['product_id'];
+            } elseif (is_scalar($cart)) {
+                $cartIds[] = $cart;
+            }
+        }
+    }
+    $preferences = [
+        "type"     => $type_meta,
+        "brand"    => $brand_meta,
+        "category" => $category_meta
+    ];
+
+    // Step 1: Helper to get items by ID
+    function getItemsByIds($ids, $allItems) {
+        $items = [];
+        foreach ($ids as $id) {
+            if (isset($allItems[$id])) {
+                $items[] = $allItems[$id];
+            }
+        }
+        return $items;
+    }
+
+    $likedItems = getItemsByIds($likedIds, $shoesById);
+    $cartItems  = getItemsByIds($cartIds, $shoesById);
+
+    // Step 2: Similarity functions
+    function calculateSimilarity($item1, $item2) {
+        return
+            count(array_intersect($item1['type'],     $item2['type'])) +
+            count(array_intersect($item1['brand'],    $item2['brand'])) +
+            count(array_intersect($item1['category'], $item2['category']));
+    }
+
+    function preferenceSimilarity($item, $prefs) {
+        return
+            count(array_intersect($item['type'],     $prefs['type'])) +
+            count(array_intersect($item['brand'],    $prefs['brand'])) +
+            count(array_intersect($item['category'], $prefs['category']));
+    }
+
+    // Step 3: Generate recommendations only if there’s user data
+    $recommendations = [];
+
+    if (!empty($likedIds) || !empty($cartIds) ||
+        !empty($preferences['type']) || !empty($preferences['brand']) || !empty($preferences['category'])) {
+
+        foreach ($shoesById as $id => $shoe) {
+            if (in_array($id, array_merge($likedIds, $cartIds))) continue;
+
+            $likeScore = 0;
+            foreach ($likedItems as $likedItem) {
+                $likeScore += calculateSimilarity($shoe, $likedItem);
+            }
+
+            $cartScore = 0;
+            foreach ($cartItems as $cartItem) {
+                $cartScore += calculateSimilarity($shoe, $cartItem);
+            }
+
+            $prefScore = preferenceSimilarity($shoe, $preferences);
+
+            $finalScore = (0.4 * $likeScore) + (0.3 * $cartScore) + (0.3 * $prefScore);
+
+            $recommendations[] = [
+                'id' => $id,
+                'name' => $shoe['title'],
+                'score' => $finalScore
+            ];
+        }
+
+        // Sort by score
+        usort($recommendations, fn($a, $b) => $b['score'] <=> $a['score']);
+
+        // Filter out products with 0 score
+        $filteredRecommendations = array_filter($recommendations, fn($rec) => $rec['score'] > 2);
+
+    if (!empty($filteredRecommendations)) {
+        
+        foreach ($filteredRecommendations as $rec) {
+            $product_id = $rec['id']; // Get the product ID from recommendation
+            $product = getProductDetailsByProduct_id($product_id); // Fetch full product details
+            // var_dump($product); // Or display in your preferred format
+            ?>
+            <a href="single.php?pid=<?php echo $product['id']?>" class="card recommend_card">
+                <img src="http://sneaker-head.local<?php echo $product['product_image'];?>" alt="Air Jordan Retro 12">
+                <div class="card-details">
+                    <h3><?php echo $product['title'];?></h3>
+                    <p class="colors"><?php echo $product['brand']?></p>
+                    <p class="price">Rs.<?php echo $product['price'];?></p>
+                </div>
+            </a>
+            <?php
+        }
+    } else {
+        // echo "No strong matches found yet. Try liking some products or updating your preferences.<br>";
+    }
+
+    } else {
+        // echo "No recommendations yet. Please like products or set your preferences to get personalized suggestions.<br>";
     }
 }

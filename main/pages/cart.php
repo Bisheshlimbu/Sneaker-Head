@@ -32,14 +32,15 @@ if($user_id){
 
 .summary-section {
     width: 30%;
-    p{
-        margin-top:10px;
+
+    p {
+        margin-top: 10px;
     }
 }
 
 .product-section h2 {
     border-bottom: 1px solid #444;
- margin: 0 0 10px;
+    margin: 0 0 10px;
     padding: 5px 0;
 }
 
@@ -76,7 +77,8 @@ if($user_id){
     margin-left: 50px;
 }
 
-.product-details h3, p {
+.product-details h3,
+p {
     margin: 0 0 10px;
 }
 
@@ -104,7 +106,7 @@ if($user_id){
     border-radius: 4px;
 
     p {
-        margin-top: 50px; 
+        margin-top: 50px;
     }
 }
 
@@ -137,12 +139,12 @@ if($user_id){
 }
 
 input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #00aaff; /* Optional: custom checkbox color */
-  cursor: pointer;
+    width: 20px;
+    height: 20px;
+    accent-color: #00aaff;
+    /* Optional: custom checkbox color */
+    cursor: pointer;
 }
-
 </style>
 
 
@@ -161,12 +163,10 @@ input[type="checkbox"] {
             <label for="<?php echo $checkboxId; ?>" style="display: flex; align-items: flex-start;">
                 <input type="checkbox" id="<?php echo $checkboxId; ?>" name="selected_products[]"
                     value="<?php echo $product['id']; ?>" style="margin-right: 10px; margin-top: 5px;"
-                    data-user_id="<?php echo $user_id;?>"
-                    data-total_price="<?php echo $total_price;?>"
-                    >
-                <div class="product-image">
+                    data-user_id="<?php echo $user_id;?>" data-total_price="<?php echo $total_price;?>">
+                <a href="single.php?pid=<?php echo $product['id']?>" class="product-image">
                     <img src="<?php echo $product['product_image']; ?>" alt="Shoe">
-                </div>  
+                </a>
                 <div class="product-details">
                     <h3><?php echo $product['title']; ?></h3>
                     <p>Size: <?php echo $cart['size']; ?></p>
@@ -184,21 +184,21 @@ input[type="checkbox"] {
         }
     }
     ?>
-      
+
     </div>
 
     <div class="summary-section">
         <!-- <div> -->
-            <h2>Purchase Summary</h2>
+        <h2>Purchase Summary</h2>
 
-            <p>Subtotal (<span id="checked-count"></span> item): <strong class="total-price"></strong></p>
-            <!-- <p>Estimated Shipping: <strong>Free</strong></p> -->
-            <!-- <p>Tax: <strong>TBD</strong></p> -->
-            <hr>
-            <p>Total: <strong class="total-price"></strong></p>
+        <p>Subtotal (<span id="checked-count"></span> item): <strong class="total-price"></strong></p>
+        <!-- <p>Estimated Shipping: <strong>Free</strong></p> -->
+        <!-- <p>Tax: <strong>TBD</strong></p> -->
+        <hr>
+        <p>Total: <strong class="total-price"></strong></p>
 
-            <button class="checkout-button">PROCEED TO CHECKOUT</button>
-            <button class="afterpay-button">Pay now with esewa</button>
-            <!-- <button class="more-options">+ MORE PAYMENT OPTIONS</button> -->
+        <button class="checkout-button">PROCEED TO CHECKOUT</button>
+        <button class="afterpay-button">Pay now with esewa</button>
+        <!-- <button class="more-options">+ MORE PAYMENT OPTIONS</button> -->
         <!-- </div> -->
     </div>

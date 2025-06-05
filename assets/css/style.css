@@ -267,26 +267,72 @@ c h2 {
     text-decoration: underline;
   }
 }
-
+.carousel-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden;
+}
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+#recommendation_carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.recommend_card {
+  flex: 0 0 25%; /* 4 cards per view */
+  box-sizing: border-box;
+  padding: 10px;
+}
 .carousel {
   display: flex;
-  margin-top: 5px;
-  gap: 20px;
-  flex-wrap: wrap;
-  a {
-    text-decoration: none;
-  }
+  transition: transform 0.5s ease-in-out;
 }
-
-.carousel-item {
-  flex: 0 0 auto;
-  width: 400px;
+/* 
+.card {
+  flex: 0 0 25%;
+  box-sizing: border-box;
+  padding: 10px;
   text-align: center;
+  /* margin-left: 10px; */
+/* }  */
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
 
-.carousel-item img {
-  width: 100%;
-  border-radius: 8px;
+.card-details {
+  margin-top: 10px;
+}
+
+.prev-btn,
+.next-btn {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.prev-btn {
+  left: 0;
+}
+
+.next-btn {
+  right: 0;
 }
 
 .product-desc {
@@ -514,8 +560,7 @@ a {
 }
 
 .price {
-  
-  font-size:1px;
+  font-size: 1px;
   margin-bottom: 8px;
 }
 
@@ -622,20 +667,20 @@ a {
   display: none;
 }
 
-.success-message{
+.success-message {
   background-color: rgba(101, 221, 101, 0.463);
   color: white;
-  border:0.5px solid white;
-  padding:10px;
-  margin-bottom:10px;
+  border: 0.5px solid white;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
 }
-.error-message{
-   background-color: rgba(242, 90, 79, 0.463);
+.error-message {
+  background-color: rgba(242, 90, 79, 0.463);
   color: white;
-  border:0.5px solid white;
-  padding:10px;
-  margin-bottom:10px;
+  border: 0.5px solid white;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
 }
 

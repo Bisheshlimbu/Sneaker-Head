@@ -84,14 +84,25 @@ $users = getUsersDetailsById($user_id);
 
             </div>
         </div>
+        <?php
+
+        $current_page= current_page();
+        if($current_page !='profile.php'){
+        ?>
         <nav class="category-nav">
             <?php
             $category=isset($_GET['category'])?$_GET['category']:"";
             ?>
-            <a href="/main/pages/product.php?category=men" class="<?php echo $category=='men'?'category-nav-active':''?>">Men</a>
-            <a href="/main/pages/product.php?category=women" class="<?php echo $category=='women'?'category-nav-active':''?>">Women</a>
-            <a href="/main/pages/product.php?category=kid" class="<?php echo $category=='kid'?'category-nav-active':''?>">Kids</a>
+            <a href="/main/pages/product.php?category=men"
+                class="<?php echo $category=='men'?'category-nav-active':''?>">Men</a>
+            <a href="/main/pages/product.php?category=women"
+                class="<?php echo $category=='women'?'category-nav-active':''?>">Women</a>
+            <a href="/main/pages/product.php?category=kid"
+                class="<?php echo $category=='kid'?'category-nav-active':''?>">Kids</a>
             <a href="#">Sale</a>
             <a href="#new-arrival">Sneaker Releases</a>
         </nav>
+        <?php
+        }
+        ?>
     </header>

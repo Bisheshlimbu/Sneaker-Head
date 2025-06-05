@@ -173,4 +173,76 @@ $(document).ready(function () {
       },
     });
   });
+
+  //slider
+  $(document).ready(function () {
+    const $carousel = $("#recommendation_carousel");
+    const $cards = $(".recommend_card");
+    const cardWidth = $cards.outerWidth(true);
+    const visibleCards = 4;
+    const totalCards = $cards.length;
+
+      if (totalCards <= 1) {
+        $("#recommended_title").hide(); 
+        $(".prev-btn, .next-btn").hide();
+        return; // Exit early — nothing to slide
+    }
+    // ✅ Hide buttons if not enough cards
+    if (totalCards <= visibleCards) {
+        $(".prev-btn, .next-btn").hide();
+        return; // no need to proceed
+    }
+    
+
+    // Clone first and last few cards
+    const $firstClones = $cards.slice(0, visibleCards).clone();
+    const $lastClones = $cards.slice(-visibleCards).clone();
+
+    // Append/prepend clones to the carousel
+    $carousel.append($firstClones);
+    $carousel.prepend($lastClones);
+
+    // Set initial position (skip the prepended clones)
+    let currentIndex = visibleCards;
+    $carousel.css("transform", `translateX(-${cardWidth * currentIndex}px)`);
+
+    // Slide next
+    $(".next-btn").click(function () {
+        currentIndex++;
+        $carousel.css({
+            transition: "transform 0.5s ease",
+            transform: `translateX(-${cardWidth * currentIndex}px)`,
+        });
+
+        if (currentIndex === totalCards + visibleCards) {
+            setTimeout(() => {
+                $carousel.css({
+                    transition: "none",
+                    transform: `translateX(-${cardWidth * visibleCards}px)`,
+                });
+                currentIndex = visibleCards;
+            }, 500);
+        }
+    });
+
+    // Slide previous
+    $(".prev-btn").click(function () {
+        currentIndex--;
+        $carousel.css({
+            transition: "transform 0.5s ease",
+            transform: `translateX(-${cardWidth * currentIndex}px)`,
+        });
+
+        if (currentIndex === 0) {
+            setTimeout(() => {
+                $carousel.css({
+                    transition: "none",
+                    transform: `translateX(-${cardWidth * totalCards}px)`,
+                });
+                currentIndex = totalCards;
+            }, 500);
+        }
+    });
+});
+
 });

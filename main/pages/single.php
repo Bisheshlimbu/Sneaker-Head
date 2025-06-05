@@ -118,179 +118,56 @@ $user_profile=[
     </div>
 </div>
 <section class="recommendations">
-    <h2>RECOMMENDED FOR YOU</h2>
-    <div class="carousel-wrapper">
-        <div class="carousel">
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
-                </div>
+    <h2 id="recommended_title">RECOMMENDED FOR YOU</h2>
+    <div class="carousel-container">
+        <button class="prev-btn">❮</button>
+        <div class="carousel-wrapper">
+            <div class="carousel" id="recommendation_carousel">
+               <?php
+                echo get_recommendation($user_id, $product_id);
+                ?>
             </div>
         </div>
+        <button class="next-btn">❯</button>
     </div>
+
 </section>
-<section class="recommendations">
-    <h2>RECENTLY VIEWED</h2>
+<!-- <section class="recommendations">
+    <h2></h2>
     <div class="carousel-wrapper">
         <div class="carousel">
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
+             <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
+                 <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
+                 <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                <div class="card-details">
-
-                    <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                    <p class="price">$200.00</p>
+                 <div class="card">
+                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        
+                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
+                        <p class="price">$200.00</p>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
-</section>
-<?php
-$shoes = get_all_project_details(); // your product list
-$favourite = get_fav_data_by_user_id($user_id);
-
-$brand_meta = getUserMeta($user_id, '_brand_preferences');
-$brand_meta = is_array($brand_meta) ? $brand_meta : [];
-
-$category_meta = getUserMeta($user_id, '_category_preferences');
-$category_meta = is_array($category_meta) ? $category_meta : [];
-
-$type_meta = getUserMeta($user_id, '_type_preferences');
-$type_meta = is_array($type_meta) ? $type_meta : [];
-
-// Reindex shoes by id
-$shoesById = [];
-foreach ($shoes as $shoe) {
-    $shoe['type'] = explode(',', str_replace(' ', '', $shoe['type']));
-    $shoe['brand'] = explode(',', str_replace(' ', '', $shoe['brand']));
-    $shoe['category'] = explode(',', str_replace(' ', '', $shoe['category']));
-    $shoesById[$shoe['id']] = $shoe;
-}
-
-// Clean liked IDs array - extract product IDs if $favourite contains arrays
-$likedIds = [];
-if (is_array($favourite)) {
-    foreach ($favourite as $fav) {
-        if (is_array($fav) && isset($fav['product_id'])) {
-            $likedIds[] = $fav['product_id'];
-        } elseif (is_scalar($fav)) {
-            $likedIds[] = $fav;
-        }
-    }
-}
-
-$cartIds = []; // Assuming cart IDs are already scalar values
-
-$preferences = [
-    "type" => $type_meta,
-    "brand" => $brand_meta,
-    "category" => $category_meta
-];
-function getItemsByIds($ids, $allItems) {
-    $items = [];
-    foreach ($ids as $id) {
-        if (isset($allItems[$id])) {
-            $items[] = $allItems[$id];
-        }
-    }
-    return $items;
-}
-
-$likedItems = getItemsByIds($likedIds, $shoesById);
-$cartItems  = getItemsByIds($cartIds, $shoesById);
-
-function calculateSimilarity($item1, $item2) {
-    return
-        count(array_intersect($item1['type'],  $item2['type'])) +
-        count(array_intersect($item1['brand'], $item2['brand'])) +
-        count(array_intersect($item1['category'], $item2['category']));
-}
-
-function preferenceSimilarity($item, $prefs) {
-    return
-        count(array_intersect($item['type'],  $prefs['type'])) +
-        count(array_intersect($item['brand'], $prefs['brand'])) +
-        count(array_intersect($item['category'], $prefs['category']));
-}
-
-$recommendations = [];
-
-foreach ($shoesById as $id => $shoe) {
-    if (in_array($id, array_merge($likedIds, $cartIds))) continue;
-
-    $likeScore = 0;
-    foreach ($likedItems as $likedItem) {
-        $likeScore += calculateSimilarity($shoe, $likedItem);
-    }
-
-    $cartScore = 0;
-    foreach ($cartItems as $cartItem) {
-        $cartScore += calculateSimilarity($shoe, $cartItem);
-    }
-
-    $prefScore = preferenceSimilarity($shoe, $preferences);
-
-    $finalScore = (0.4 * $likeScore) + (0.3 * $cartScore) + (0.3 * $prefScore);
-
-    $recommendations[] = [
-        'title' => $shoe['title'],
-        'score' => $finalScore
-    ];
-}
-
-usort($recommendations, fn($a, $b) => $b['score'] <=> $a['score']);
-
-echo "Top Recommended Shoes:<br>";
-foreach ($recommendations as $rec) {
-    echo "- {$rec['title']} (Score: {$rec['score']})<br>";
-}
+</section> -->
