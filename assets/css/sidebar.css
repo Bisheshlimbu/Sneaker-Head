@@ -29,21 +29,18 @@ html {
 }
 
 .sidebar-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: italic;
 }
-
+/* 
 .sidebar-logo img {
   width: 30px;
   height: 30px;
   margin-right: 10px;
-}
+} */
 
 .sidebar-logo span {
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
+   color: #1976d2;
 }
 
 .sidebar nav ul {

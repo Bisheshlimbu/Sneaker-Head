@@ -292,6 +292,7 @@ c h2 {
 .carousel {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  gap:px;
 }
 /* 
 .card {
@@ -517,6 +518,7 @@ a {
 .card-container {
   max-width: 1400px;
   margin: 0 auto;
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -545,7 +547,8 @@ a {
 }
 
 .card-details {
-  padding: 20px;
+  padding: 10px;
+  margin-top: 20px;
 }
 
 .colors {
@@ -556,12 +559,14 @@ a {
 
 .card h3 {
   font-size: 1.1rem;
-  margin: 5px 0 12px;
+  margin-top: 0px;
 }
 
 .price {
   font-size: 1px;
-  margin-bottom: 8px;
+  margin-bottom: 30px;
+  margin-top: 15px;
+
 }
 
 .trending {

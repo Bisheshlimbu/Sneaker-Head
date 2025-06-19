@@ -1,4 +1,4 @@
-<?php  
+<?php
 // include_once('main/header.php');
 include_once(__DIR__ . '/main/header.php');
 
@@ -92,7 +92,7 @@ include_once(__DIR__ . '/main/header.php');
                 </a>
             </div> -->
 
-            
+
         </div>
     </section>
 
@@ -120,25 +120,23 @@ include_once(__DIR__ . '/main/header.php');
 
     <!-- Promotional Banners -->
     <section class="promo-banners">
+        <?php
+        // var_dump(get_highlights_checked_only());
+        $checked_highlights = get_highlights_checked_only();
+        if (is_array($checked_highlights) && !empty($checked_highlights)) {
+            foreach ($checked_highlights as $highlights) {
+                ?>
+                <div>
+                    <span>
+                        <img src="http://sneaker-head.local/<?php echo $highlights['image']; ?>" alt="Sneaker">
+                    </span>
+                    <h4><?php echo ucfirst($highlights['title']); ?></h4>
+                </div>
+                <?php
+            }
+        }
+        ?>
 
-        <div>
-            <span>
-                <img src="assets/images/fav1.jpg" alt="Sneaker">
-            </span>
-            <h4>Favourite</h4>
-        </div>
-        <div>
-            <span>
-                <img src="assets/images/favs.jpg" alt="Sneaker">
-            </span>
-            <h4>New arrival</h4>
-        </div>
-        <div>
-            <span>
-                <img src="assets/images/fav3.jpg" alt="Sneaker">
-            </span>
-            <h4>Most Purchased</h4>
-        </div>
     </section>
 
     <!-- Recommendations Carousel -->
@@ -184,32 +182,48 @@ include_once(__DIR__ . '/main/header.php');
 
     <!-- New Arrivals -->
     <?php
-     $newProducts=getProductDetailsForNew();
-     if(!empty($newProducts) && is_array($newProducts)){
+    $newProducts = getProductDetailsForNew();
+    if (!empty($newProducts) && is_array($newProducts)) {
         ?>
-    <section class="new-arrivals" id="new-arrival">
-        <h2>NEW ARRIVALS</h2>
-        <div class="carousel">
-            <?php 
-        
-            foreach($newProducts as $newProduct){
+        <section class="new-arrivals" id="new-arrival">
+            <h2>NEW ARRIVALS</h2>
+            <div class="carousel">
+                <?php
+
+                foreach ($newProducts as $newProduct) {
+                    ?>
+                    <a href="main/pages/single.php?pid=<?php echo $newProduct['id'] ?>" class="card">
+                        <img src="http://sneaker-head.local/<?php echo $newProduct['product_image'] ?>"
+                            alt="Air Jordan Retro 12">
+                        <div class="card-details">
+                            <h3><?php echo $newProduct['title']; ?></h3>
+                            <p class="colors"><?php echo $newProduct['brand'] ?></p>
+                            <p class="price">Rs.<?php echo " " . $newProduct['price'] ?></p>
+                        </div>
+                    </a>
+                    <?php
+                }
                 ?>
-            <a href="main/pages/single.php?pid=<?php echo $newProduct['id']?>" class="card">
-                <img src="http://sneaker-head.local/<?php echo $newProduct['product_image']?>"
-                    alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <h3><?php echo $newProduct['title'];?></h3>
-                    <p class="colors"><?php echo $newProduct['brand']?></p>
-                    <p class="price">Rs.<?php echo " ".$newProduct['price']?></p>
+
+            </div>
+        </section>
+
+    <?php } ?>
+
+    <section class="recommendations">
+        <h2 id="recommended_title">YOU MIGHT ALSO LIKE</h2>
+        <div class="carousel-container">
+            <button class="prev-btn">❮</button>
+            <div class="carousel-wrapper">
+                <div class="carousel" id="recommendation_carousel">
+                    <?php
+                    echo get_recommendation($user_id);
+                    ?>
                 </div>
-            </a>
-            <?php
-            }
-        ?>
-
+            </div>
+            <button class="next-btn">❯</button>
         </div>
-    </section>
-    <?php }?>
 
+    </section>
 </main>
-<?php include_once('main/footer.php');?>
+<?php include_once('main/footer.php'); ?>

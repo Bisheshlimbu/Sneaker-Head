@@ -9,7 +9,7 @@ $arrivel=isset($_GET['arrivel'])?$_GET['arrivel']:"";
 
     <section class="shop-mens-container">
         <div class="shop-mens">
-            <h2>SHOP MEN’S</h2>
+            <h2>SHOP <?php echo strtoupper($category)?>’S</h2>
             <div class="category-buttons">
                 <a href="?category=<?php echo $category;?>&type=&brand="><button
                         class="<?php echo $brand==''&&$type==''?'active-tab':''?>">All Shoes</button></a>
@@ -66,5 +66,7 @@ $arrivel=isset($_GET['arrivel'])?$_GET['arrivel']:"";
             }
             ?>
     </div>
+    
 
 </div>
+<?php include_once('../footer.php')?>

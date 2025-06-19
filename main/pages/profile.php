@@ -25,168 +25,11 @@ $user_details=getUsersDetailsById($user_id);
     <title>SneakerHead - Shopping Preferences</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="http://sneaker-head.local/assets/js/profile.js"></script>
+    <link rel="stylesheet" href="http://sneaker-head.local/assets/css/profile.css">
 
 
-    <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
 
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #121212;
-        color: #ffffff;
-    }
-
-    .profile-header {
-        background-color:rgb(52, 52, 52);
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #333;
-    }
-
-    .profile-header h1 {
-        color: #fff;
-        font-size: 24px;
-    }
-
-    .profile-nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .profile-nav a {
-        color: #fff;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: 500;
-    }
-
-    .profile-container {
-        display: flex;
-        padding: 40px;
-    }
-
-    .profile-sidebar {
-        width: 250px;
-    }
-
-    .profile-sidebar ul {
-        list-style: none;
-    }
-
-    .profile-sidebar li {
-        background-color: #1e1e1e;
-        margin-bottom: 10px;
-        padding: 15px;
-        cursor: pointer;
-        border: 1px solid #333;
-    }
-
-    .profile-sidebar li.active {
-        background-color: #333;
-        font-weight: bold;
-    }
-
-    .main {
-        flex: 1;
-        padding-left: 40px;
-    }
-
-    .section-title {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    .brand-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 15px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    .brand-item,
-    .category-item,
-    .type-item {
-        background-color: #1e1e1e;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid #333;
-        cursor: pointer;
-    }
-
-    .selected {
-        border: 2px solid #00bfff;
-    }
-
-    .info-box {
-        background-color: #1e1e1e;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #333;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-
-    }
-
-    .info-box .label {
-        font-weight: bold;
-    }
-
-    .info-box .value {
-        margin-top: 5px;
-        border: none;
-        padding: 2px;
-        background: none;
-        s width: 500px;
-    }
-
-    .info-box a {
-        color: #00bfff;
-        text-decoration: underline;
-    }
-
-    .btn-update {
-        margin-top: 30px;
-        padding: 10px 20px;
-        background-color: #00bfff;
-        color: #000;
-        border: none;
-        cursor: pointer;
-        font-weight: bold;
-    }
-
-    .btn-update:hover {
-        background-color: #00a0cc;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    #profile-message-container {
-        padding: 10px;
-
-        .successMessage {
-            background-color: green;
-            padding: 10px;
-        }
-
-        .errorMessage {
-            background-color: green;
-            padding: 10px;
-        }
-    }
-    </style>
+   
 </head>
 
 <body>
@@ -195,7 +38,7 @@ $user_details=getUsersDetailsById($user_id);
         <nav class="profile-nav">
 
             <a href="http://sneaker-head.local/main/pages/order.php">Orders</a>
-            <a href="#">Favorites</a>
+            <a href="http://sneaker-head.local/main/pages/dummy.php">Favorites</a>
 
             <a href="#">Profile</a>
         </nav>

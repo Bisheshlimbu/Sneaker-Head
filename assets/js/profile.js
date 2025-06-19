@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         item.classList.remove("selected");
       }
 
-      console.log(selectedBrands);
+      console.log("Brands:"+selectedBrands);
     });
   });
 

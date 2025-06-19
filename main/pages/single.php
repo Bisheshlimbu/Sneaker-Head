@@ -118,13 +118,13 @@ $user_profile=[
     </div>
 </div>
 <section class="recommendations">
-    <h2 id="recommended_title">RECOMMENDED FOR YOU</h2>
+    <h2 id="recommended_title">YOU MIGHT ALSO LIKE</h2>
     <div class="carousel-container">
         <button class="prev-btn">❮</button>
         <div class="carousel-wrapper">
             <div class="carousel" id="recommendation_carousel">
                <?php
-                echo get_recommendation($user_id, $product_id);
+                echo get_recommendation($user_id);
                 ?>
             </div>
         </div>
@@ -132,42 +132,8 @@ $user_profile=[
     </div>
 
 </section>
-<!-- <section class="recommendations">
-    <h2></h2>
-    <div class="carousel-wrapper">
-        <div class="carousel">
-             <div class="card">
-                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                    <div class="card-details">
-                        
-                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                        <p class="price">$200.00</p>
-                    </div>
-                </div>
-                 <div class="card">
-                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                    <div class="card-details">
-                        
-                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                        <p class="price">$200.00</p>
-                    </div>
-                </div>
-                 <div class="card">
-                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                    <div class="card-details">
-                        
-                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                        <p class="price">$200.00</p>
-                    </div>
-                </div>
-                 <div class="card">
-                    <img src="http://sneaker-head.local/assets/images/asics.jpg" alt="Air Jordan Retro 12">
-                    <div class="card-details">
-                        
-                        <h3>Air Jordan Retro 12 Basketball Shoes</h3>
-                        <p class="price">$200.00</p>
-                    </div>
-                </div>
-        </div>
-    </div>
-</section> -->
+<?php include_once('../footer.php')?>
+
+
+
+

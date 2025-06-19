@@ -6,12 +6,12 @@ include_once('sidebar.php');
 
 if (empty($user_id)) {
     header("Location: /main/pages/login.php");
-    exit(); 
+    exit();
 }
 
 
 if (isset($_POST['create_product_btn'])) {
-    
+
 
     $title = $_POST['title'];
     $price = $_POST['price'];
@@ -22,7 +22,7 @@ if (isset($_POST['create_product_btn'])) {
     $created_at = $updated_at = strtolower(date('F-d-Y'));
 
     $sizeArray = array_map('intval', explode('-', $_POST['size']));
-$sizeJson = json_encode($sizeArray);
+    $sizeJson = json_encode($sizeArray);
 
     if (isset($_POST) && $_FILES) {
 
@@ -111,7 +111,7 @@ $sizeJson = json_encode($sizeArray);
                 <select name="category" required>
                     <option value="">select-category</option>
                     <option value="men">Men</option>
-                    <option value="women">Women</option>
+                    poportugal <option value="women">Women</option>
                     <option value="kid">Kid</option>
                 </select>
             </div>
@@ -124,6 +124,7 @@ $sizeJson = json_encode($sizeArray);
                     <option value="jordan">Jordan</option>
                     <option value="adidas">Adidas</option>
                     <option value="asics">Asics</option>
+                    <option value="goldstar">goldstar</option>
                 </select>
             </div>
         </div>
@@ -165,50 +166,50 @@ $sizeJson = json_encode($sizeArray);
     </form>
 </main>
 <script>
-document.getElementById("size").addEventListener("input", function() {
-    const sizeInput = this.value;
-    const errorMsg = document.getElementById("size-error");
-    const addBtn = document.querySelector('#create_product_btn');
+    document.getElementById("size").addEventListener("input", function () {
+        const sizeInput = this.value;
+        const errorMsg = document.getElementById("size-error");
+        const addBtn = document.querySelector('#create_product_btn');
 
-    // Check for invalid characters: only numbers and single hyphens allowed
-    if (!/^[0-9\-]*$/.test(sizeInput)) {
-        errorMsg.textContent = "Only numbers and hyphens (-) are allowed.";
-        return;
-    }
-
-    // Check for double hyphens
-    if (sizeInput.includes("--")) {
-        errorMsg.textContent = "Double hyphens (--) are not allowed.";
-        addBtn.setAttribute("disabled", true);
-        addBtn.style.cursor = "not-allowed";
-        return;
-    }
-
-    // Validate individual sizes
-    const sizes = sizeInput.split("-");
-    for (let size of sizes) {
-        if (size === "") {
-            errorMsg.textContent = "Each size must be a number. No empty values allowed.";
-            addBtn.setAttribute("disabled", true);
-            addBtn.style.cursor = "not-allowed";
-
-
+        // Check for invalid characters: only numbers and single hyphens allowed
+        if (!/^[0-9\-]*$/.test(sizeInput)) {
+            errorMsg.textContent = "Only numbers and hyphens (-) are allowed.";
             return;
         }
 
-        const num = parseInt(size);
-        if (isNaN(num) || num < 30 || num > 45) {
-            errorMsg.textContent = "Sizes must be numbers from 30 to 45.";
+        // Check for double hyphens
+        if (sizeInput.includes("--")) {
+            errorMsg.textContent = "Double hyphens (--) are not allowed.";
             addBtn.setAttribute("disabled", true);
             addBtn.style.cursor = "not-allowed";
-
             return;
         }
-    }
 
-    // If all checks pass
-    addBtn.removeAttribute("disabled");
-    addBtn.style.cursor = "";
-    errorMsg.textContent = "";
-});
+        // Validate individual sizes
+        const sizes = sizeInput.split("-");
+        for (let size of sizes) {
+            if (size === "") {
+                errorMsg.textContent = "Each size must be a number. No empty values allowed.";
+                addBtn.setAttribute("disabled", true);
+                addBtn.style.cursor = "not-allowed";
+
+
+                return;
+            }
+
+            const num = parseInt(size);
+            if (isNaN(num) || num < 30 || num > 45) {
+                errorMsg.textContent = "Sizes must be numbers from 30 to 45.";
+                addBtn.setAttribute("disabled", true);
+                addBtn.style.cursor = "not-allowed";
+
+                return;
+            }
+        }
+
+        // If all checks pass
+        addBtn.removeAttribute("disabled");
+        addBtn.style.cursor = "";
+        errorMsg.textContent = "";
+    });
 </script>

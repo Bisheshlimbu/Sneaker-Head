@@ -1,8 +1,9 @@
-<?php 
+<?php
 include_once('connection.php');
 
 
-function getUsersDetailsById($user_id){
+function getUsersDetailsById($user_id)
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM users WHERE id=:id");
@@ -23,7 +24,8 @@ function getUsersDetailsById($user_id){
 }
 
 
-function getAllProjects(){
+function getAllProjects()
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM products");
@@ -43,19 +45,20 @@ function getAllProjects(){
     }
 }
 
-function updateProductDetails($params){
-   
+function updateProductDetails($params)
+{
+
     try {
         global $conn;
         $updated_at = strtolower(date('F-d-Y'));
 
-$sizes = $params['size']; // original array of strings
+        $sizes = $params['size']; // original array of strings
 
-// Convert each element to int
-$sizes_int = array_map('intval', $sizes);
+        // Convert each element to int
+        $sizes_int = array_map('intval', $sizes);
 
-// Encode to JSON string (numbers, no quotes)
-$json_sizes = json_encode($sizes_int);
+        // Encode to JSON string (numbers, no quotes)
+        $json_sizes = json_encode($sizes_int);
 
 
         $stmt = $conn->prepare("UPDATE products SET title=:title, price=:price, category=:category, brand=:brand, type=:type, size=:size,
@@ -71,9 +74,10 @@ $json_sizes = json_encode($sizes_int);
         $stmt->bindParam(':description', $params['desc'], PDO::PARAM_STR);
         $stmt->bindParam(':updated_at', $updated_at, PDO::PARAM_STR);
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             return true;
-        };
+        }
+        ;
 
     } catch (PDOException $e) {
         error_log("Database error: " . $e->getMessage());
@@ -84,9 +88,135 @@ $json_sizes = json_encode($sizes_int);
     }
 }
 
-  
 
-function getProductDetails($brand, $type, $category, $arrivel) {
+function create_highlights($params, $files)
+{
+    try {
+        global $conn;
+        $title = isset($params["title"]) ? $params["title"] : "";
+
+        $base_dir = '/assets/uploads/';
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . $base_dir;
+
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // First: Save thumbnail image
+        $thumb_name = $files['image']['name'];
+        $thumb_tmp = $files['image']['tmp_name'];
+
+        if (move_uploaded_file($thumb_tmp, $uploadDir . $thumb_name)) {
+            $thumb_url = $base_dir . $thumb_name;
+
+            // Now INSERT the product with the thumbnail image
+            $stmt = $conn->prepare("INSERT INTO highlights(title, image)
+            VALUES(:title, :image)");
+
+            $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+            $stmt->bindParam(':image', $thumb_url, PDO::PARAM_STR);
+            $response = [];
+            if ($stmt->execute()) {
+                $response = [
+                    'status' => 'success',
+                    'message' => 'Successfully Added.',
+                    'title' => $title,
+                    'image' => $thumb_url
+                ];
+            } else {
+                $response = ['status' => 'error', 'message' => 'Failed to Add.'];
+            }
+            return $response;
+
+        }
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+function updateHighlightsMakeVisible($params)
+{
+    try {
+        global $conn;
+
+        $countStmt = $conn->prepare("SELECT COUNT(*) FROM highlights WHERE status = 1");
+        $countStmt->execute();
+        $currentCount = (int) $countStmt->fetchColumn();
+
+        if ($currentCount >= 3) {
+            return ['status' => 'error', 'message' => 'Limit reached: only 3 highlights allowed.'];
+        }
+        $stmt = $conn->prepare("
+            UPDATE highlights
+            SET status = :status
+            WHERE id = :id
+        ");
+
+        $stmt->bindParam(':status', $params['checked'], PDO::PARAM_INT);
+        $stmt->bindParam(':id', $params['highlight_id'], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return ['status' => 'success', 'message' => 'Highlight updated successfully.'];
+
+        } else {
+            return ['status' => 'error', 'message' => 'Failed to update highlight.'];
+
+        }
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+
+function get_highlights()
+{
+    try {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM highlights ORDER BY id DESC");
+
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+function get_highlights_checked_only()
+{
+    try {
+        global $conn;
+        $stmt = $conn->prepare("SELECT * FROM highlights WHERE status=1 ORDER BY id DESC");
+
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $products;
+
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return "Database error: " . $e->getMessage();
+    } catch (Exception $e) {
+        error_log("An error occurred: " . $e->getMessage());
+        return "An error occurred: " . $e->getMessage();
+    }
+}
+function getProductDetails($brand, $type, $category, $arrivel)
+{
     try {
         global $conn;
 
@@ -134,12 +264,13 @@ function getProductDetails($brand, $type, $category, $arrivel) {
 
 
 
-function getProductDetailsForNew(){
+function getProductDetailsForNew()
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * 
 FROM products
-WHERE STR_TO_DATE(created_at, '%M-%d-%Y') >= CURDATE() - INTERVAL 7 DAY
+WHERE STR_TO_DATE(created_at, '%M-%d-%Y') >= CURDATE() - INTERVAL 20 DAY
 LIMIT 4");
         // $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
 
@@ -158,7 +289,8 @@ LIMIT 4");
 }
 
 
-function getProductDetailsByProduct_id($product_id){
+function getProductDetailsByProduct_id($product_id)
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM products WHERE id=:id");
@@ -178,7 +310,8 @@ function getProductDetailsByProduct_id($product_id){
 }
 
 
-function getProductAttachmentsByProduct_id($product_id){
+function getProductAttachmentsByProduct_id($product_id)
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM attachments as a 
@@ -200,7 +333,8 @@ function getProductAttachmentsByProduct_id($product_id){
 
 
 
-function updateUserMeta($user_id, $meta_key, $meta_value){
+function updateUserMeta($user_id, $meta_key, $meta_value)
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM user_meta WHERE user_id=:user_id AND meta_key=:meta_key");
@@ -208,8 +342,8 @@ function updateUserMeta($user_id, $meta_key, $meta_value){
         $stmt->bindParam(':meta_key', $meta_key, PDO::PARAM_STR);
         $stmt->execute();
         $existing = $stmt->fetchAll(PDO::FETCH_ASSOC);
-           
-         if ($existing) {
+
+        if ($existing) {
             // Update if exists
             $updateStmt = $conn->prepare("UPDATE user_meta SET meta_value = :meta_value WHERE user_id = :user_id AND meta_key = :meta_key");
             $updateStmt->bindParam(':meta_value', $meta_value, PDO::PARAM_STR);
@@ -239,14 +373,15 @@ function updateUserMeta($user_id, $meta_key, $meta_value){
 
 
 
-function get_all_project_details(){
+function get_all_project_details()
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM products");
-       
+
         $stmt->execute();
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                   
+
         return $products;
 
     } catch (PDOException $e) {
@@ -260,7 +395,8 @@ function get_all_project_details(){
 
 
 
-function getUserMeta($user_id, $meta_key){
+function getUserMeta($user_id, $meta_key)
+{
     try {
         global $conn;
         $stmt = $conn->prepare("SELECT * FROM user_meta WHERE user_id = :user_id AND meta_key = :meta_key");
@@ -289,7 +425,8 @@ function getUserMeta($user_id, $meta_key){
         return "An error occurred: " . $e->getMessage();
     }
 }
-function saveCartItems($params){
+function saveCartItems($params)
+{
     try {
         global $conn;
 
@@ -313,9 +450,10 @@ function saveCartItems($params){
             $updateStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $updateStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
             $updateStmt->bindParam(':size', $size, PDO::PARAM_INT);
-            if($updateStmt->execute()){
+            if ($updateStmt->execute()) {
                 return true;
-            };
+            }
+            ;
         } else {
             // 3. Insert new item if not exists
             $insertStmt = $conn->prepare("INSERT INTO cart (user_id, product_id, size, quantity) VALUES (:user_id, :product_id, :size, :quantity)");
@@ -323,9 +461,10 @@ function saveCartItems($params){
             $insertStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
             $insertStmt->bindParam(':size', $size, PDO::PARAM_INT);
             $insertStmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
-            if($insertStmt->execute()){
+            if ($insertStmt->execute()) {
                 return true;
-            };
+            }
+            ;
         }
 
 
@@ -338,14 +477,15 @@ function saveCartItems($params){
     }
 }
 
-function add_to_fav($params) {
+function add_to_fav($params)
+{
     try {
-       
+
         global $conn;
 
         $product_id = $params['product_id'];
         $user_id = $params['user_id'];
- 
+
         // First check if the product_id already exists
         $checkStmt = $conn->prepare("SELECT id FROM product_meta WHERE product_id = :product_id AND user_id=:user_id");
         $checkStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
@@ -353,23 +493,23 @@ function add_to_fav($params) {
         $checkStmt->execute();
 
         if ($checkStmt->rowCount() > 0) {
-            
+
             // Product already exists — update the 'like' value
             $updateStmt = $conn->prepare("UPDATE product_meta SET `like` = :like WHERE product_id = :product_id AND user_id=:user_id");
             $updateStmt->bindParam(':like', $params['like'], PDO::PARAM_INT);
             $updateStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
             $updateStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $updateStmt->execute();
-            return ['status'=>'success','like'=>$params['like']];
+            return ['status' => 'success', 'like' => $params['like']];
         } else {
-            
+
             // Product doesn't exist — insert a new row
             $insertStmt = $conn->prepare("INSERT INTO product_meta (user_id, product_id, `like`) VALUES (:user_id, :product_id, :like)");
             $insertStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $insertStmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
             $insertStmt->bindParam(':like', $params['like'], PDO::PARAM_INT);
             $insertStmt->execute();
-            return ['status'=>'success','like'=>$params['like']];
+            return ['status' => 'success', 'like' => $params['like']];
         }
 
     } catch (PDOException $e) {
@@ -382,7 +522,8 @@ function add_to_fav($params) {
 }
 
 
-function get_fav_data($product_id) {
+function get_fav_data($product_id)
+{
     try {
         global $conn;
 
@@ -392,9 +533,9 @@ function get_fav_data($product_id) {
         $checkStmt->execute();
         $existing = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
-        if($existing){
+        if ($existing) {
             return $existing;
-        }else{
+        } else {
             return [];
         }
     } catch (PDOException $e) {
@@ -406,7 +547,8 @@ function get_fav_data($product_id) {
     }
 }
 
-function get_fav_data_by_user_id($user_id) {
+function get_fav_data_by_user_id($user_id)
+{
     try {
         global $conn;
 
@@ -427,14 +569,16 @@ function get_fav_data_by_user_id($user_id) {
     }
 }
 
-function current_page() {
+function current_page()
+{
     $currentPage = basename($_SERVER['PHP_SELF']); // gets 'profile.php'
     return $currentPage;
 }
 
 
 
-function getCartDetails($user_id){
+function getCartDetails($user_id)
+{
     try {
         global $conn;
 
@@ -443,10 +587,10 @@ function getCartDetails($user_id){
         $stmt->execute();
         $existing = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if($existing){
+        if ($existing) {
             return $existing;
         }
-       
+
     } catch (PDOException $e) {
         error_log("Database error: " . $e->getMessage());
         return "Database error: " . $e->getMessage();
@@ -455,7 +599,8 @@ function getCartDetails($user_id){
         return "An error occurred: " . $e->getMessage();
     }
 }
-function getRecommendedProducts($user_profile) {
+function getRecommendedProducts($user_profile)
+{
     try {
         global $conn;
         $stmt = $conn->query("SELECT * FROM products");
@@ -510,7 +655,8 @@ function getRecommendedProducts($user_profile) {
 
 //recommendation algorithm implementiaono
 
-function get_recommendation($user_id, $product_id){
+function get_recommendation($user_id)
+{
 
     $shoes = get_all_project_details(); // Fetch all products
 
@@ -526,13 +672,13 @@ function get_recommendation($user_id, $product_id){
     $type_meta = getUserMeta($user_id, '_type_preferences');
     $type_meta = is_array($type_meta) ? $type_meta : [];
 
-    $cartDetails=getCartDetails($user_id);
-    
+    $cartDetails = getCartDetails($user_id);
+
     // Reindex shoes by ID and normalize fields
     $shoesById = [];
     foreach ($shoes as $shoe) {
-        $shoe['type']     = explode(',', str_replace(' ', '', $shoe['type']));
-        $shoe['brand']    = explode(',', str_replace(' ', '', $shoe['brand']));
+        $shoe['type'] = explode(',', str_replace(' ', '', $shoe['type']));
+        $shoe['brand'] = explode(',', str_replace(' ', '', $shoe['brand']));
         $shoe['category'] = explode(',', str_replace(' ', '', $shoe['category']));
         $shoesById[$shoe['id']] = $shoe;
     }
@@ -560,13 +706,14 @@ function get_recommendation($user_id, $product_id){
         }
     }
     $preferences = [
-        "type"     => $type_meta,
-        "brand"    => $brand_meta,
+        "type" => $type_meta,
+        "brand" => $brand_meta,
         "category" => $category_meta
     ];
 
     // Step 1: Helper to get items by ID
-    function getItemsByIds($ids, $allItems) {
+    function getItemsByIds($ids, $allItems)
+    {
         $items = [];
         foreach ($ids as $id) {
             if (isset($allItems[$id])) {
@@ -577,31 +724,36 @@ function get_recommendation($user_id, $product_id){
     }
 
     $likedItems = getItemsByIds($likedIds, $shoesById);
-    $cartItems  = getItemsByIds($cartIds, $shoesById);
+    $cartItems = getItemsByIds($cartIds, $shoesById);
 
     // Step 2: Similarity functions
-    function calculateSimilarity($item1, $item2) {
+    function calculateSimilarity($item1, $item2)
+    {
         return
-            count(array_intersect($item1['type'],     $item2['type'])) +
-            count(array_intersect($item1['brand'],    $item2['brand'])) +
+            count(array_intersect($item1['type'], $item2['type'])) +
+            count(array_intersect($item1['brand'], $item2['brand'])) +
             count(array_intersect($item1['category'], $item2['category']));
     }
 
-    function preferenceSimilarity($item, $prefs) {
+    function preferenceSimilarity($item, $prefs)
+    {
         return
-            count(array_intersect($item['type'],     $prefs['type'])) +
-            count(array_intersect($item['brand'],    $prefs['brand'])) +
+            count(array_intersect($item['type'], $prefs['type'])) +
+            count(array_intersect($item['brand'], $prefs['brand'])) +
             count(array_intersect($item['category'], $prefs['category']));
     }
 
     // Step 3: Generate recommendations only if there’s user data
     $recommendations = [];
 
-    if (!empty($likedIds) || !empty($cartIds) ||
-        !empty($preferences['type']) || !empty($preferences['brand']) || !empty($preferences['category'])) {
+    if (
+        !empty($likedIds) || !empty($cartIds) ||
+        !empty($preferences['type']) || !empty($preferences['brand']) || !empty($preferences['category'])
+    ) {
 
         foreach ($shoesById as $id => $shoe) {
-            if (in_array($id, array_merge($likedIds, $cartIds))) continue;
+            if (in_array($id, array_merge($likedIds, $cartIds)))
+                continue;
 
             $likeScore = 0;
             foreach ($likedItems as $likedItem) {
@@ -628,28 +780,28 @@ function get_recommendation($user_id, $product_id){
         usort($recommendations, fn($a, $b) => $b['score'] <=> $a['score']);
 
         // Filter out products with 0 score
-        $filteredRecommendations = array_filter($recommendations, fn($rec) => $rec['score'] > 2);
+        $filteredRecommendations = array_filter($recommendations, fn($rec) => $rec['score'] > 0);
 
-    if (!empty($filteredRecommendations)) {
-        
-        foreach ($filteredRecommendations as $rec) {
-            $product_id = $rec['id']; // Get the product ID from recommendation
-            $product = getProductDetailsByProduct_id($product_id); // Fetch full product details
-            // var_dump($product); // Or display in your preferred format
-            ?>
-            <a href="single.php?pid=<?php echo $product['id']?>" class="card recommend_card">
-                <img src="http://sneaker-head.local<?php echo $product['product_image'];?>" alt="Air Jordan Retro 12">
-                <div class="card-details">
-                    <h3><?php echo $product['title'];?></h3>
-                    <p class="colors"><?php echo $product['brand']?></p>
-                    <p class="price">Rs.<?php echo $product['price'];?></p>
-                </div>
-            </a>
-            <?php
+        if (!empty($filteredRecommendations)) {
+
+            foreach ($filteredRecommendations as $rec) {
+                $product_id = $rec['id']; // Get the product ID from recommendation
+                $product = getProductDetailsByProduct_id($product_id); // Fetch full product details
+                // var_dump($product); // Or display in your preferred format
+                ?>
+                <a href="single.php?pid=<?php echo $product['id'] ?>" class="card recommend_card">
+                    <img src="http://sneaker-head.local<?php echo $product['product_image']; ?>" alt="Air Jordan Retro 12">
+                    <div class="card-details">
+                        <h3><?php echo $product['title']; ?></h3>
+                        <p class="colors"><?php echo $product['brand'] ?></p>
+                        <p class="price">Rs.<?php echo $product['price']; ?></p>
+                    </div>
+                </a>
+                <?php
+            }
+        } else {
+            // echo "No strong matches found yet. Try liking some products or updating your preferences.<br>";
         }
-    } else {
-        // echo "No strong matches found yet. Try liking some products or updating your preferences.<br>";
-    }
 
     } else {
         // echo "No recommendations yet. Please like products or set your preferences to get personalized suggestions.<br>";

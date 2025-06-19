@@ -87,7 +87,8 @@ $users = getUsersDetailsById($user_id);
         <?php
 
         $current_page= current_page();
-        if($current_page !='profile.php'){
+        if($current_page !='profile.php' && $current_page !='dummy.php'){
+           
         ?>
         <nav class="category-nav">
             <?php

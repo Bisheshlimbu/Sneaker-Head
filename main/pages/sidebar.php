@@ -7,7 +7,7 @@ $email = isset($_SESSION['email']) ? $_SESSION['email'] : "";
 
 if (empty($user_id)) {
     header("Location: /main/pages/login.php");
-    exit(); 
+    exit();
 }
 ?>
 
@@ -23,9 +23,9 @@ if (empty($user_id)) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="http://sneaker-head.local/assets/js/admin.js"></script>
     <script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
     </script>
 </head>
 
@@ -33,13 +33,12 @@ if (empty($user_id)) {
     <div class="sidebar-container">
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <img src="../../assets/images/logo.png" alt="Sneaker Head Logo">
-                <span>Sneaker Head</span>
+                <a href="http://sneaker-head.local/"> Sneaker<span> Head</span>
             </div>
             <nav>
                 <ul>
                     <li><i class="fas fa-tachometer-alt"></i><a href="admin.php">Dashboard</a></li>
-                    <li><i class="fas fa-images"></i> Home Slides</li>
+                    <li><i class="fas fa-images"></i><a href="home-slides.php">Home Slides</a></li>
                     <li><i class="fas fa-users"></i> Users</li>
                     <li><i class="fas fa-box"></i><a href="product-list.php">Products</a></li>
                     <li><i class="fas fa-th-large"></i> Category</li>

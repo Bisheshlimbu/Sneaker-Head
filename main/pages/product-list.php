@@ -15,14 +15,6 @@ if (empty($user_id)) {
 ?>
 
 <style>
-/* body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #1e1e1e;
-      color: #ffffff;
-      padding: 40px;
-    } */
-
 h1 {
     font-size: 32px;
     color: #ffffff;
@@ -121,13 +113,7 @@ input[type="date"] {
     background-color: #1f7a1f;
 }
 
-.archived {
-    background-color: #b87333;
-}
 
-.disabled {
-    background-color: #a52a2a;
-}
 
 .btn-edit,
 .btn-delete {

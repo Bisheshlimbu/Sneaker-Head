@@ -1,10 +1,10 @@
 <?php 
 include_once('../header.php');
 
-if($user_id){
+// if($user_id){
     $cartDetails=getCartDetails($user_id);
     // var_dump($cartDetails);
-}
+// }
 ?>
 
 <style>
@@ -32,6 +32,7 @@ if($user_id){
 
 .summary-section {
     width: 30%;
+    max-height: 300px;
 
     p {
         margin-top: 10px;
@@ -182,6 +183,8 @@ input[type="checkbox"] {
         </div>
         <?php
         }
+    }else{
+        echo "No Product found in cart.";
     }
     ?>
 
@@ -198,7 +201,7 @@ input[type="checkbox"] {
         <p>Total: <strong class="total-price"></strong></p>
 
         <button class="checkout-button">PROCEED TO CHECKOUT</button>
-        <button class="afterpay-button">Pay now with esewa</button>
+        <!-- <button class="afterpay-button">Pay now with esewa</button> -->
         <!-- <button class="more-options">+ MORE PAYMENT OPTIONS</button> -->
         <!-- </div> -->
     </div>

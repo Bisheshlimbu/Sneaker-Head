@@ -83,6 +83,16 @@ document.addEventListener("DOMContentLoaded", function () {
     var user_id = $(this).data("user_id");
     var qty = parseInt($("#qty-number").html());
 
+    if (!user_id || user_id === "0") {
+      Swal.fire({
+        icon: "error",
+        title: "Please Login First",
+        html: 'You must <a href="/main/pages/login.php" style="color:#0065F8;">login here</a> to continue.',
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     if (!selectedBrand) {
       $("#selectSize").html("Select size !");
       return;
@@ -128,6 +138,15 @@ $(document).ready(function () {
 
     var product_id = $btn.data("product_id");
     var user_id = $btn.data("user_id");
+    if (!user_id || user_id === "0") {
+      Swal.fire({
+        icon: "error",
+        title: "Please Login First",
+        html: 'You must <a href="/main/pages/login.php" style="color:#0065F8;">login here</a> to continue.',
+        showConfirmButton: true,
+      });
+      return;
+    }
 
     var like = $btn.data("like");
     var newLike = like == 1 ? 0 : 1;
@@ -182,17 +201,15 @@ $(document).ready(function () {
     const visibleCards = 4;
     const totalCards = $cards.length;
 
-      if (totalCards <= 1) {
-        $("#recommended_title").hide(); 
-        $(".prev-btn, .next-btn").hide();
-        return; // Exit early — nothing to slide
+    if (totalCards <1) {
+      $("#recommended_title").hide();
+      $(".prev-btn, .next-btn").hide();
+      return; // Exit early — nothing to slide
     }
-    // ✅ Hide buttons if not enough cards
     if (totalCards <= visibleCards) {
-        $(".prev-btn, .next-btn").hide();
-        return; // no need to proceed
+      $(".prev-btn, .next-btn").hide();
+      return; // no need to proceed
     }
-    
 
     // Clone first and last few cards
     const $firstClones = $cards.slice(0, visibleCards).clone();
@@ -208,41 +225,42 @@ $(document).ready(function () {
 
     // Slide next
     $(".next-btn").click(function () {
-        currentIndex++;
-        $carousel.css({
-            transition: "transform 0.5s ease",
-            transform: `translateX(-${cardWidth * currentIndex}px)`,
-        });
+      currentIndex++;
+      $carousel.css({
+        transition: "transform 0.5s ease",
+        transform: `translateX(-${cardWidth * currentIndex}px)`,
+      });
 
-        if (currentIndex === totalCards + visibleCards) {
-            setTimeout(() => {
-                $carousel.css({
-                    transition: "none",
-                    transform: `translateX(-${cardWidth * visibleCards}px)`,
-                });
-                currentIndex = visibleCards;
-            }, 500);
-        }
+      if (currentIndex === totalCards + visibleCards) {
+        setTimeout(() => {
+          $carousel.css({
+            transition: "none",
+            transform: `translateX(-${cardWidth * visibleCards}px)`,
+          });
+          currentIndex = visibleCards;
+        }, 500);
+      }
     });
 
     // Slide previous
     $(".prev-btn").click(function () {
-        currentIndex--;
-        $carousel.css({
-            transition: "transform 0.5s ease",
-            transform: `translateX(-${cardWidth * currentIndex}px)`,
-        });
+      currentIndex--;
+      $carousel.css({
+        transition: "transform 0.5s ease",
+        transform: `translateX(-${cardWidth * currentIndex}px)`,
+      });
 
-        if (currentIndex === 0) {
-            setTimeout(() => {
-                $carousel.css({
-                    transition: "none",
-                    transform: `translateX(-${cardWidth * totalCards}px)`,
-                });
-                currentIndex = totalCards;
-            }, 500);
-        }
+      if (currentIndex === 0) {
+        setTimeout(() => {
+          $carousel.css({
+            transition: "none",
+            transform: `translateX(-${cardWidth * totalCards}px)`,
+          });
+          currentIndex = totalCards;
+        }, 500);
+      }
     });
-});
+  });
 
+  
 });
